@@ -1,0 +1,77 @@
+site_name: YizMod QZK 文档站
+site_description: YizMod QZK — NeoForge 1.21.1 库模组文档 / 知识库
+site_author: yiz
+repo_url: https://github.com/yizhengtong/yiz-qzk
+repo_name: yizhengtong/yiz-qzk
+edit_uri: blob/main/docs/
+
+theme:
+  name: material
+  language: zh
+  icon:
+    logo: material/book-open-variant
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换深色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换浅色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yizhengtong/yiz-qzk
+  generator: false
+
+copyright: Copyright &copy; 2025-2026 yiz
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+nav:
+  - 🏠 首页: index.md
+  - 📖 API 参考:
+      - api/index.md
+      - api/yizmodqzk-api.md
+      - api/registries.md
+      - api/effects.md
+  - 🧠 知识库:
+      - knowledge/index.md
+      - knowledge/architecture.md
+      - knowledge/pitfalls.md
+      - knowledge/geckolib-fix.md
+  - 📝 变更日志:
+      - changelog/index.md
+  - 🤖 AI 知识库:
+      - llm/index.md

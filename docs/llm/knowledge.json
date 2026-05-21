@@ -1,0 +1,404 @@
+{
+  "project": {
+    "name": "YizMod QZK",
+    "modid": "yizmodqzk",
+    "mc_version": "1.21.1",
+    "loader": "NeoForge",
+    "neo_version": "21.1.228",
+    "description": "NeoForge 1.21.1 库模组，为下游模组提供伤害/效果/健康修改框架"
+  },
+  "api": [
+    {
+      "title": "6 维度详解",
+      "content": "| # | 维度 | 类型 | 说明 |\n|---|------|------|------|\n| 1 | ID | `ResourceLocation` | 唯一标识 `modid:name` |\n| 2 | 父类 (ParentType) | 枚举 5 种 | 残响/铭刻/显化/本形/升灵 |\n| 3 | 等级 (Level) | `int` | 效果强度，动态可通过 `getLevel()` 重写 |\n| 4 | 感知方式 (PerceptionMode) | OR 集合 | 天赋/词缀/随影/自定义 |\n| 5 | 生效条件 (ActivationCondition) | 接口 | 常驻/攻击/投射物命中/自定义 |\n| 6 | 稀有度 (Rarity) | 枚举 5 级 | 神话/传说/史诗/精良/平凡 |"
+    },
+    {
+      "title": "父类枚举",
+      "content": "| 父类 | 英文 | 推荐用途 |\n|------|------|---------|\n| 残响 | ECHO | 攻击类效果 |\n| 铭刻 | INSCRIPTION | 回复类效果 |\n| 显化 | MANIFESTATION | 机制类效果 |\n| 本形 | ORIGIN | 防御类效果 |\n| 升灵 | ASCENSION | 被动类效果 |"
+    },
+    {
+      "title": "稀有度枚举",
+      "content": "| 稀有度 | 颜色 | 颜色值 |\n|--------|------|--------|\n| 神话 (MYTHIC) | 红色 | `0xFFFF5555` |\n| 传说 (LEGENDARY) | 金色 | `0xFFFFAA00` |\n| 史诗 (EPIC) | 紫色 | `0xFFAA00AA` |\n| 精良 (RARE) | 蓝色 | `0xFF5555FF` |\n| 平凡 (COMMON) | 白色 | `0xFFFFFFFF` |"
+    },
+    {
+      "title": "感知方式",
+      "content": "| 感知方式 | 绑定 | 说明 |\n|---------|------|------|\n| EntityPerception | 实体 | 天赋，通过解锁系统管理 |\n| ItemPerception | 物品 | 词缀，绑定到物品 |\n| ContainerPerception | 容器 | 随影 |\n| CustomPerception | — | 自定义 BiPredicate |"
+    },
+    {
+      "title": "创建效果",
+      "content": ""
+    },
+    {
+      "title": "代码创建",
+      "content": "```java\npublic class MyEffect extends AbstractEffect {\n    public MyEffect() {\n        super(\n            ResourceLocation.parse(\"mymod:my_effect\"),\n            \"my_effect\",\n            \"§6我的效果名\",\n            ParentType.ASCENSION,       // 升灵\n            1,                           // 等级\n            Set.of(new EntityPerception()),  // 天赋\n            new PassiveCondition(),          // 常驻生效\n            Rarity.EPIC                      // 史诗\n        );\n    }\n\n    @Override\n    public void execute"
+    },
+    {
+      "title": "注册效果",
+      "content": "```java\n// 构造函数自动注册，一行即可\nYizModQZKAPI.registerEffect(new MyEffect());\n```"
+    },
+    {
+      "title": "解锁效果",
+      "content": "```java\nYizModQZKAPI.unlockEffect(player, effectId);\n```"
+    },
+    {
+      "title": "查询效果",
+      "content": "```java\n// 获取实体所有已解锁天赋\nList<AbstractEffect> talents = YizModQZKAPI.getEntityTalents(player);\n\n// 检查是否解锁\nboolean unlocked = YizModQZKAPI.isEffectUnlocked(player, effectId);\n```"
+    },
+    {
+      "title": "天赋面板展示",
+      "content": "所有 `EntityPerception` 类型的效果会自动出现在 `PlayerTalentUI` 中：\n\n```\n§6效果名 §f[§e星光×10§f] §fLv.10\n  §8└─ 升灵\n  §8└─ 生效：常驻生效\n  §8└─ 天赋\n  §8§o天官赐福，地官赦罪，水官解厄\n  §8§o凌空之躯，火德天上，灰烬之神\n  §f80%伤害增幅，80%伤害减免，100%回击\n  §f10次新生，3点伤害格挡\n```"
+    },
+    {
+      "title": "结构概览",
+      "content": "| 模块 | 入口类 | 说明 |\n|------|--------|------|\n| 效果框架 | `YizModQZKAPI` | 效果注册、解锁、查询、事件分发 |\n| 注册表 API | 各 `*Registry` 类 | 伤害减免、回击、飞行等能力的条件注册 |\n| 玩家数据 | `PlayerDataAPI` | 类型安全的玩家数据持久化键值存储 |"
+    },
+    {
+      "title": "目录",
+      "content": "- [YizModQZKAPI 完整参考](yizmodqzk-api.md) — 所有公开方法签名与说明\n- [注册表 API 参考](registries.md) — 全部 12 个注册表的使用方式\n- [效果框架 6 维度](effects.md) — AbstractEffect 详解\n\n!!! tip \"自动生成\"\n    API 文档由脚本从 Java 源码自动生成，确保与实际代码保持一致。"
+    },
+    {
+      "title": "AttributeBalanceRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `enableFor(LivingEntity entity)` | `void` | - |\n| `enforceFloors(LivingEntity entity)` | `void` | - |"
+    },
+    {
+      "title": "ContainerDataStorage",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getInstance()` | `ContainerDataStorage` | 容器数据持久化接口 — 将任意 {@link Container} 绑定到世界存档自动存读。 <p>其他模组可通过 {@ |\n| `register(String namespace, String key, Container container)` | `AutoCloseable` | 注册一个容器到世界存档自动持久化系统。 |\n| `unregister(ResourceLocation id)` | `void` | 注销一个已注册的容器，停止自动存档。 |\n| `has(String namespace, String key)` | `boolean` | 判断某个容器是否已注册。 |\n| `get(String namespace, String key)` | `Container` | 获取已注册的容器实例。 |\n| `saveAll()` | `void` | 立即强制保存所有已注册容器的当前状态"
+    },
+    {
+      "title": "CounterAttackRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getMultiplier(Player player, LivingEntity source)` | `float` | 回击注册表 <p> 在下游模组注册条件判断，前置模组在受击时触发回击。 通过临时修饰玩家 ATTACK_DAMAGE 实 |\n| `register(Trigger trigger)` | `void` | - |\n| `tryCounterAttack(Player player, LivingEntity source)` | `void` | 尝试触发回击。 由 Mixin 在 actuallyHurt TAIL 调用。 |\n| `AttributeModifier(MODIFIER_ID, (double)` | `new` | - |\n| `attack()` | `确保` | - |"
+    },
+    {
+      "title": "DamageAttributeRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `register(Holder<Attribute> holder)` | `void` | 伤害属性注册表 <p> 注册的属性将作为额外伤害源。攻击者每次近战攻击时， 自动计算所有已注册属性的加权总和，通过 {@ |\n| `register(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为伤害属性，并指定比例系数。 攻击者拥有该属性时，每次攻击额外附加 {@code value * scale |\n| `getTotalValue(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册伤害属性的加权总值。 |"
+    },
+    {
+      "title": "DamageEvent",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `cancel(String reason)` | `void` | 伤害应用事件（通知入口） <p> 在 {@link YizModQZKAPI#damage} 或 {@link YizM |\n| `isCanceled()` | `boolean` | - |\n| `getTarget()` | `LivingEntity` | 伤害承受方 |\n| `getAmount()` | `float` | 伤害数值（可修改） |\n| `setAmount(float amount)` | `void` | 修改伤害数值 |\n| `getType()` | `DamageType` | 伤害类型 |\n| `getSource()` | `Entity` | 伤害来源（攻击者），可能为空 |\n| `getCancelReason()` | `String` | 取消原因 |"
+    },
+    {
+      "title": "DamageReductionRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `markReductionApplied()` | `void` | 伤害减免注册表（Agent 级写前钩子） <p> 由 ASM Agent 在 {@code LivingEntity.s |\n| `consumeReductionApplied()` | `boolean` | Mixin 层调用：检查 Agent 层是否已处理减免。 |\n| `modify(LivingEntity entity, float oldHealth, float newHealth)` | `float` | 健康值修改器，在 setHealth() 最终写入前执行 / public interface HealthModifi |\n| `register(HealthModifier modifier)` | `void` | 注册一个健康值修改器 |\n| `applyBeforeSetHealth(LivingEntity entity, float newHealth)` | `float` | 由 ASM "
+    },
+    {
+      "title": "DamageResult",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `DamageResult(float applied,\n    float delta,\n    boolean canceled,\n    St...)` | `record` | 伤害应用结果 |\n| `success(float applied, float delta)` | `DamageResult` | - |\n| `DamageResult(applied, delta, false, \"\")` | `new` | - |\n| `canceled(String reason)` | `DamageResult` | - |\n| `DamageResult(0, 0, true, reason)` | `new` | - |"
+    },
+    {
+      "title": "FlightAbilityRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `mayFly()` | `强制` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |"
+    },
+    {
+      "title": "FlightOptimizationRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `shouldOptimize(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldOptimize(LivingEntity entity)` | `boolean` | - |"
+    },
+    {
+      "title": "HealBanAttributeRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPercent(Holder<Attribute> holder, float scale)` | `void` | 禁疗属性注册表 <p> 注册的属性将自动作为禁疗源。攻击者每次近战攻击时， 自动计算所有已注册属性的总和，为目标施加禁疗 |\n| `registerFixed(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为固定值禁疗属性。 <p> 攻击者每拥有 1 点该属性，目标每次治疗被削减 {@code scale} 点。 |\n| `getPercentTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册百分比禁疗属性的总值（已乘缩放系数）。 |\n| `getFixedTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册固定值禁疗属性的总值（已乘缩放系数）。 |"
+    },
+    {
+      "title": "KnockbackImmunityRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
+    },
+    {
+      "title": "NoCollisionRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
+    },
+    {
+      "title": "PlayerDataAPI",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `setSyncCallback(java.util.function.BiConsumer<Player, String> callback)` | `void` | 通用玩家数据附件 API <p> 为下游模组提供类型安全的玩家数据存储，自动持久化。 所有数据默认持久化到玩家 NBT  |\n| `register(String key, Codec<T> codec, T defaultValue)` | `void` | 注册一个玩家数据条目。 |\n| `IllegalArgumentException(\"Unknown PlayerData key: \" + key)` | `new` | - |\n| `set(Player player, String key, T value)` | `void` | 获取玩家指定键的数据，不存在时返回默认值。 / public static <T> T get(Player playe |\n| `discard(Player player, String "
+    },
+    {
+      "title": "ProjectileImmunityRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `hurt()` | `前置在` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
+    },
+    {
+      "title": "ProjectileReflectionSystem",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |"
+    },
+    {
+      "title": "SpecialDamageAttributeRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerTrueDamage(Holder<Attribute> holder, float scale)` | `void` | 特殊伤害属性注册表 <p> 注册的属性将自动作为真实伤害/破甲伤害/破无敌帧的数值来源。 攻击者每次近战攻击时，自动计算 |\n| `registerArmorPiercing(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破甲伤害属性。 <p> 攻击者每拥有 1 点该属性，每次近战攻击附加 {@code scale} 点破甲伤 |\n| `registerPierceInvulnerability(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破无敌帧属性。 <p> 攻击者拥有该属性时（总值 > 0），破甲伤害同时无视无敌帧。 单独注册该属性但不注 |\n| `getTrueDamageTotal(LivingEntity att"
+    },
+    {
+      "title": "UndyingRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tryRevive(LivingEntity entity, DamageSource source)` | `float` | 复活系统注册表，挂接原版不死图腾路径 {@code checkTotemDeathProtection}。 自定义复活动 |\n| `if(!result.displayItem()` | `读取并替换` | - |"
+    },
+    {
+      "title": "YizModQZKAPI",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `damage(LivingEntity target, float amount, Entity source)` | `DamageResult` | YizMod QZK 公开 API <p> 第三方模组通过此接口与前置库交互。 伤害相关方法会触发 {@link Dam |\n| `DamageEvent(target, amount, DamageType.FLAT, source)` | `new` | - |\n| `if(event.isCanceled()` | `检查取消` | - |\n| `percentDamage(LivingEntity target, float percent, Entity source)` | `DamageResult` | 通知入口②：对目标造成最大生命值百分比伤害。 <p> 计算方式：amount = target.getMaxHealth |\n| `DamageEvent(target, amount, DamageType.PERCENT, sou"
+    }
+  ],
+  "registries": [
+    {
+      "title": "PlayerDataAPI",
+      "content": "类型安全的玩家数据持久化键值存储，基于 NeoForge `AttachmentType`。\n\n```java\n// 注册数据类型（在模组构造器中）\nPlayerDataAPI.register(\"mymod:star_level\", Codec.intRange(0, 10), 0);\nPlayerDataAPI.register(\"mymod:has_star_body\", Codec.BOOL, false);\n\n// 读写\nint level = PlayerDataAPI.get(player, \"mymod:star_level\");\nPlayerDataAPI.set(player, \"mymod:star_level\", 5);\n\n// 丢弃\nPlayerDataAPI.discard(player, \"mymod:star_level\");\nPlayerDataAPI.discardAll(player);\n```\n\n!!! important \"自动同步\"\n    `set()` 每次写入时自动触发 `SyncPlayerDataPayload` 网络包从服务端推送"
+    },
+    {
+      "title": "DamageReductionRegistry",
+      "content": "伤害减免钩子，在 `setHealth()` 最终写入前拦截修改。\n\n```java\nDamageReductionRegistry.register((entity, oldHealth, newHealth) -> {\n    // entity: 受伤实体\n    // oldHealth: setHealth 前的血量\n    // newHealth: setHealth 传入的原始值\n    return newHealth * 0.5f; // 50% 减免\n});\n```"
+    },
+    {
+      "title": "CounterAttackRegistry",
+      "content": "回击触发条件，命中时反弹伤害给攻击者。\n\n```java\nCounterAttackRegistry.register((player, source) -> {\n    // player: 被攻击的玩家\n    // source: 伤害来源\n    // 返回 true 触发回击\n    return true;\n});\n```"
+    },
+    {
+      "title": "UndyingRegistry",
+      "content": "自定义复活，类似不死图腾。\n\n```java\nUndyingRegistry.register((entity, source) -> {\n    // 返回 true 触发复活\n    // 需要自行在回调中处理：消耗复活道具、设置血量等\n    return StarDataHelper.canConsumeLayer(player);\n});\n```"
+    },
+    {
+      "title": "ProjectileReflectionSystem",
+      "content": "投射物返还，命中时反弹回攻击者。\n\n```java\nProjectileReflectionSystem.register(entity -> {\n    return entity instanceof Player;\n});\n```"
+    },
+    {
+      "title": "ProjectileImmunityRegistry",
+      "content": "投射物免疫。\n\n```java\nProjectileImmunityRegistry.register(entity -> {\n    return StarDataHelper.getStarLevel(entity) > 0;\n});\n```"
+    },
+    {
+      "title": "NoCollisionRegistry",
+      "content": "碰撞免疫（推进和碰撞检测）。\n\n```java\nNoCollisionRegistry.register(entity -> {\n    return StarDataHelper.getStarLevel(entity) > 0;\n});\n```"
+    },
+    {
+      "title": "KnockbackImmunityRegistry",
+      "content": "击退霸体。\n\n```java\nKnockbackImmunityRegistry.register(entity -> {\n    return StarDataHelper.getStarLevel(entity) > 0;\n});\n```"
+    },
+    {
+      "title": "FlightOptimizationRegistry",
+      "content": "飞行惯性优化条件。\n\n```java\nFlightOptimizationRegistry.register(entity -> {\n    return true; // 启用飞行惯性优化\n});\n```"
+    },
+    {
+      "title": "FlightAbilityRegistry",
+      "content": "绝对飞行权。\n\n```java\nFlightAbilityRegistry.register(entity -> {\n    return true; // 强制允许飞行\n});\n```"
+    },
+    {
+      "title": "DamageAttributeRegistry",
+      "content": "把属性值转为额外伤害（乘以缩放系数）。\n\n```java\n// 把攻击力属性绑定为额外伤害，缩放系数 0.08（每级 8%）\nDamageAttributeRegistry.register(Attributes.ATTACK_DAMAGE, 0.08f);\n```"
+    },
+    {
+      "title": "AttributeBalanceRegistry",
+      "content": "属性正负锁定，每 tick 恢复属性底线。\n\n```java\nAttributeBalanceRegistry.enableFor(player);\n```"
+    }
+  ],
+  "knowledge_base": [
+    {
+      "title": "效果框架 6 维度",
+      "content": "**决策**: 效果 = id + parentType + level + perceptionModes(OR) + activationCondition + rarity + execute()\n\n**理由**: 复杂的效果系统拆解为 6 个独立维度，每个维度可独立扩展。下游只需实现 `execute()`，其他维度通过构造函数声明。"
+    },
+    {
+      "title": "统一 UI 面板",
+      "content": "**决策**: 所有下游模组的汇聚到同一个天赋/词缀面板\n\n**理由**: 类比 JEI 提供统一的物品列表界面，库提供统一的天赋/词缀/随影展示面。下游无需自行实现 UI。通过 `ModRegistries` 注册 + `getTalentDetailLines()` 扩展点实现自定义详情。"
+    },
+    {
+      "title": "Java Agent 而非纯 Mixin",
+      "content": "**决策**: 用 ASM Agent 做字节码改写，Mixin 只做薄层钩子\n\n**理由**: Mixin 在 source 级别工作，无法覆盖所有方法重写路径。ASM Agent 在 class 级别拦截所有子类行为，确保健康修改系统的完整性。"
+    },
+    {
+      "title": "ASM Agent 引导时机",
+      "content": "**决策**: `tizMod` 构造器中引导，而非 `FantasyEndingPlugin.onLoad()`\n\n**理由**: onLoad() 在 Mixin 准备阶段执行，Agent 注册的 ClassFileTransformer 会触发 LivingEntity 提前加载，导致 geckolib 等模组的 MixinTargetAlreadyLoadedException。"
+    },
+    {
+      "title": "CoreMod JS 禁用",
+      "content": "**决策**: `coremods.json` 置空，CoreMod JS 不再加载\n\n**理由**: CoreMod JS 功能已被 Mixin + ASM Agent 覆盖。且 CoreMod 的类转换在时序上更早，更易触发 LivingEntity 提前加载。移除后 GeckoLib 冲突仍需通过 Agent 引导时机解决。"
+    },
+    {
+      "title": "数据自动同步",
+      "content": "**决策**: `PlayerDataAPI.set()` 自动触发 S2C 同步包\n\n**理由**: 下游模组使用 `PlayerDataAPI.set()` 修改数据时，服务端玩家数据变更但客户端玩家不可见。通过 `SyncPlayerDataPayload` 自动推送到客户端，保证天赋面板等 UI 实时刷新。"
+    },
+    {
+      "title": "问题描述",
+      "content": "游戏启动时 GeckoLib 报错：\n\n```\nMixin prepare for mod geckolib failed:\nMixinTargetAlreadyLoadedException:\n  geckolib.mixins.json:common.LivingEntityMixin\n  target net.minecraft.world.entity.LivingEntity was loaded too early.\n```\n\n游戏在启动阶段崩溃，无法进入主菜单。错误出现在 Mixin 框架的预处理阶段——GeckoLib 的 `LivingEntityMixin` 要求目标类在 Mixin 应用时尚未被加载，但此时 `LivingEntity` 已经被提前加载了。"
+    },
+    {
+      "title": "排查过程",
+      "content": ""
+    },
+    {
+      "title": "第一步：定位提前加载的触发点",
+      "content": "堆栈跟踪显示 `LivingEntity` 的加载发生在:\n\n```\nDisplayWindow.updateModuleReads()\n  → Class.forName()\n    → ... MixinProcessor.prepareConfigs()\n      → MixinTargetAlreadyLoadedException\n```\n\n错误发生在 Mixin 框架处理 GeckoLib 的配置时，检测到 `LivingEntity` 已经加载。"
+    },
+    {
+      "title": "第二步：排查 CoreMod JS",
+      "content": "`yizmodqzk_healban.js` 是 NeoForge CoreMod，在 Mixin 框架初始化之前就会执行类转换。如果 CoreMod 触发了 `LivingEntity` 的加载，GeckoLib 就会失败。\n\n**验证**: 禁用 CoreMod JS 后仍然报错 → CoreMod 只是部分原因。"
+    },
+    {
+      "title": "第三步：排查 ASM Agent",
+      "content": "`FantasyEndingPlugin.onLoad()` 在 Mixin 配置选择阶段触发 ASM Agent 加载。Agent 注册 `LivingHealthTransformer`，其在类转换管道中可能触发 `LivingEntity` 的提前加载。\n\n**验证**: 将 Agent 引导移到 `tizMod` 构造器后，错误消失。"
+    },
+    {
+      "title": "第四步：确定根因",
+      "content": "两个因素共同导致：\n1. CoreMod JS 在 Mixin 之前就处理 `LivingEntity` 的字节码\n2. Agent 在 `FantasyEndingPlugin.onLoad()` 中引导（Mixin 配置选择阶段），触发类加载\n\n修复 CoreMod 但不管 Agent（或反之），问题仍存在。必须同时处理两个。"
+    },
+    {
+      "title": "解决方案",
+      "content": ""
+    },
+    {
+      "title": "修改 1：禁用 CoreMod JS",
+      "content": "`src/main/resources/META-INF/coremods.json`:\n```json\n{}\n```\n\nCoreMod JS 的功能已被 Mixin + ASM Agent 覆盖，禁用以防意外触发类加载。"
+    },
+    {
+      "title": "修改 2：延迟 ASM Agent 引导",
+      "content": "`FantasyEndingPlugin.java` — `onLoad()` 不再调用 `AsmBootstrapper.start()`：\n```java\n@Override\npublic void onLoad(String mixinPackage) {\n    // 不在这里加载 Agent —— 延迟到模组构造器\n}\n```\n\n`tizMod.java` — 构造器中引导 Agent：\n```java\npublic tizMod(IEventBus modEventBus, ModContainer modContainer) {\n    // ... 其他初始化 ...\n    \n    // 延迟加载 ASM Agent（此时 Mixin 已完成）\n    try {\n        AsmBootstrapper.start();\n    } catch (Exception e) {\n        LOGGER.error(\"Failed to bootstrap ASM Agent\", e);\n    }\n}\n```"
+    },
+    {
+      "title": "核心原则",
+      "content": "任何在 Mixin 框架完成之前触发 `LivingEntity` 类加载的操作都会导致此冲突。需要确保：\n1. 不在 Mixin 插件 `onLoad()` 中加载影响实体类的 Agent\n2. 不使用 CoreMod 修改实体类（用 Mixin 或普通事件替代）\n3. 含有 Minecraft 实体类引用的静态初始化块不会在执行 Mixin 之前触发"
+    },
+    {
+      "title": "其他相关冲突",
+      "content": "| 模组 | 冲突原因 | 建议 |\n|------|---------|------|\n| geckolib | LivingEntity 提前加载 | 见本页方案 |\n| 其他实体 Mixin 模组 | 同理 | 参考相同排查思路 |"
+    },
+    {
+      "title": "目录",
+      "content": "- [架构决策记录](architecture.md) — 为什么这样设计\n- [踩坑集](pitfalls.md) — 开发中遇到的各种坑\n- [GeckoLib 冲突修复](geckolib-fix.md) — MixinTargetAlreadyLoadedException 排查与修复全过程"
+    },
+    {
+      "title": "如何添加知识",
+      "content": "在 `docs/knowledge/` 下新建 `.md` 文件，MkDocs 会自动将其加入导航。"
+    }
+  ],
+  "pitfalls": [
+    {
+      "title": "GeckoLib MixinTargetAlreadyLoadedException",
+      "content": "**现象**: 游戏启动时 GeckoLib 报 `MixinTargetAlreadyLoadedException: target LivingEntity was loaded too early`，游戏崩溃。\n\n**原因**: 两个触发源：\n1. CoreMod JS (`yizmodqzk_healban.js`) — 在 Mixin 预处理之前就转换了 `LivingEntity` 的字节码\n2. `FantasyEndingPlugin.onLoad()` 加载 ASM Agent — Agent 注册的 `ClassFileTransformer` 在 Mixin 准备阶段触发了 `LivingEntity` 的加载\n\n**修复**: \n- 禁用 CoreMod JS（`coremods.json` 置空）\n- Agent 引导移到 `tizMod` 构造器中\n\n**记录日期**: 2026-05-21"
+    },
+    {
+      "title": "天赋面板数据不刷新",
+      "content": "**现象**: 使用下界之星增加星光层数后，天赋面板显示的数值不变。\n\n**原因**: `PlayerTalentUI.getPlayerTalents()` 使用缓存，仅根据\"解锁数量\"判断缓存是否有效。星光层数变化不会触发缓存失效。\n\n**修复**: 移除天赋列表缓存，每帧重建。面板仅在背包打开时渲染，性能影响可忽略。\n\n**记录日期**: 2026-05-21"
+    },
+    {
+      "title": "退出重进天赋丢失",
+      "content": "**现象**: 解锁天赋后退出游戏重进，天赋面板显示\"没有已解锁的天赋\"。\n\n**原因**: `UnlockManager` 使用静态 `HashMap<UUID, Set<ResourceLocation>>`，数据存在内存中，未持久化到磁盘。\n\n**修复**: 创建 `UnlockSavedData` (extends `SavedData`)，通过 `DimensionDataStorage` 保存到世界存档。在 `LevelEvent.Load` 时加载、`LevelEvent.Save` 时写入。`UnlockManager.unlock()` 自动标记脏数据。\n\n**记录日期**: 2026-05-21"
+    },
+    {
+      "title": "客户端看不到玩家数据变更",
+      "content": "**现象**: 服务端调用 `PlayerDataAPI.set()` 后，客户端通过 `get()` 读取仍是旧值。\n\n**原因**: `AttachmentType` 的数据只保存在服务端玩家对象上，不同步到客户端玩家。\n\n**修复**: 创建 `SyncPlayerDataPayload` 网络包。`PlayerDataAPI.set()` 通过回调自动发送 S2C 包，客户端收到后更新本地玩家的 Attachment。\n\n**记录日期**: 2026-05-21"
+    },
+    {
+      "title": "窗口内容溢出",
+      "content": "**现象**: 天赋面板缩小后，详情行文字超出窗口内容区。\n\n**原因**: 预裁剪检查只在整条天赋层面做，没有考虑详情行超出边界的情况。\n\n**修复**: 改为先计算整条天赋的完整高度（标准行 + 详情行），如果不能完整显示则跳过该天赋。\n\n**记录日期**: 2026-05-21"
+    },
+    {
+      "title": "根目录旧版 mixins.json",
+      "content": "**现象**: 项目根目录有一个只包含 3 个 mixin 的旧版 `yizmodqzk.mixins.json`（缺少 `FlightOptimizationMixin` 和 `NoCollisionMixin`）。\n\n**影响**: 如果 IDE 意外将根目录加入资源路径，两个 mixin 不会生效。\n\n**建议**: 删除根目录的旧版文件，只保留 `src/main/resources/` 下的完整版（5 个 mixin）。"
+    },
+    {
+      "title": "flatDir 仓库无法解析 Maven 结构",
+      "content": "**现象**: 下游模组使用 `flatDir` 指向主模组的 `repo/` 目录，但 `./gradlew publish` 生成的是 Maven 目录结构。\n\n**原因**: `flatDir` 只在目录根找 `.jar` 文件，不会遍历 `net/minecraft/client/yiz/` 子目录。\n\n**修复**: 改用 `maven { url = 'file:///path/to/repo' }` 代替 `flatDir`。"
+    }
+  ],
+  "changelog": [
+    {
+      "title": "2026-05-22 — `750e14b0`",
+      "content": "更新 CLAUDE.md：补充注册表 API 文档（10 个 Registry + PlayerDataAPI）"
+    },
+    {
+      "title": "2026-05-21 — `04ef23c8`",
+      "content": "修复 GeckoLib 冲突 + 天赋面板 UI 联动 + 数据持久化与同步"
+    },
+    {
+      "title": "2026-05-19 — `45b69061`",
+      "content": "清理旧 GUI 资源 + 移除旧武器/天赋类 + 新增架构审查文档 + 新增 network 网络同步包"
+    },
+    {
+      "title": "2026-05-16 — `862a8501`",
+      "content": "新增 Unsafe 实例级保护系统 + 整理 CLAUDE.md"
+    },
+    {
+      "title": "2026-05-16 — `59095715`",
+      "content": "更新 CLAUDE.md：新增攻击目标锁定 + 物品属性系统章节"
+    },
+    {
+      "title": "2026-05-16 — `a32235d9`",
+      "content": "新增攻击目标锁定 + 物品属性系统 + 简易指令注册 + %伤害增幅/减免 Mixin"
+    },
+    {
+      "title": "2026-05-16 — `4d28d1be`",
+      "content": "清理残余功能 + 新增物品属性系统 + 简易指令注册 + %伤害增幅/减免 Mixin 集成"
+    },
+    {
+      "title": "2026-05-16 — `5fd1e873`",
+      "content": "Implement High-Level Smithing GUI with texture block compositing"
+    },
+    {
+      "title": "2026-05-16 — `db0f0de9`",
+      "content": "Refactor container data persistence into formal namespaced API"
+    },
+    {
+      "title": "2026-05-16 — `cf45c3b4`",
+      "content": "Restructure GUI system: refactor container classes and UI config"
+    },
+    {
+      "title": "2026-05-15 — `f1650673`",
+      "content": "Refactor test chest into dynamic container system with texture atlas planning"
+    },
+    {
+      "title": "2026-05-14 — `d78738a4`",
+      "content": "Add GUI texture block system: interactive test container with slot click fix"
+    },
+    {
+      "title": "2026-05-14 — `cc287178`",
+      "content": "Add distribution package task and API doc with integration guide"
+    },
+    {
+      "title": "2026-05-14 — `bab72e75`",
+      "content": "Add special damage API (true/armor-piercing/pierce-invulnerability) and CoreMod heal ban fallback"
+    },
+    {
+      "title": "2026-05-14 — `15bb7e80`",
+      "content": "Fix heal ban tick enforcement to use itemsById reflection for Titan Float channel coverage"
+    },
+    {
+      "title": "2026-05-14 — `988fa052`",
+      "content": "Implement ASM-level heal ban and tick enforcement for Titan compatibility"
+    },
+    {
+      "title": "2026-05-14 — `36b7ac91`",
+      "content": "Add public API: attribute-binding damage system and direct health modification"
+    },
+    {
+      "title": "2026-05-14 — `9ddd6e7a`",
+      "content": "Add universal health channel scanner and public API"
+    },
+    {
+      "title": "2026-05-11 — `70b87719`",
+      "content": "Fix ASM Agent loading and implement Reimu attribute-to-health pipeline"
+    },
+    {
+      "title": "2026-05-11 — `3ca13fc1`",
+      "content": "Implement health modification system with three-layer architecture"
+    },
+    {
+      "title": "2026-05-11 — `43b501ec`",
+      "content": "Purge test code and debug messages"
+    },
+    {
+      "title": "2026-05-11 — `d9574827`",
+      "content": "Refactor talent UI panel into resizable, draggable window"
+    },
+    {
+      "title": "2026-05-11 — `d39c9724`",
+      "content": "Fix AttackContext tag detection and attribute modifier scheduling"
+    },
+    {
+      "title": "2026-05-11 — `1623e562`",
+      "content": "Fix item perception to check NBT binding, unify UI tooltip styling"
+    },
+    {
+      "title": "2026-05-11 — `843a9ae3`",
+      "content": "Fix mixin: hurt() callback needs CallbackInfoReturnable<Boolean>"
+    },
+    {
+      "title": "2026-05-11 — `aa471eec`",
+      "content": "Add test effects and fix library design issues"
+    },
+    {
+      "title": "2026-05-11 — `7e6bc21c`",
+      "content": "Initial commit: YizMod QZK Library Framework"
+    },
+    {
+      "title": "2026-05-11 — `a068f346`",
+      "content": "Initial commit"
+    }
+  ]
+}
