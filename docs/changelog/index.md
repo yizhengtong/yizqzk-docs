@@ -1,10 +1,38 @@
 # 变更日志
 
-最后更新: 2026-05-22 00:21
+最后更新: 2026-05-22 04:28
 
 来源仓库: `D:/ZM/yiz1.21.1`
 
 ---
+
+### 2026-05-22 — `e2497663`
+
+fix: flight speed 1.2x + instant stop on key release
+
+### 2026-05-22 — `4a9eee03`
+
+feat: cosmic2 shader preset — star flares + HSV nebula
+
+### 2026-05-22 — `c19c3926`
+
+feat: ShaderManager — central shader preset registry with runtime switching
+
+### 2026-05-22 — `ee7ed09c`
+
+fix: shader compilation — GLSL simplification, armor null-guard, uniform naming
+
+### 2026-05-22 — `6d08c6f6`
+
+feat: shader rendering system — star film overlay via core shaders
+
+### 2026-05-22 — `384481b7`
+
+docs: add architecture blueprint ref + current focus area to CLAUDE.md
+
+### 2026-05-22 — `6c5df5e9`
+
+docs: add AI quick entry for YIZwikl docs site
 
 ### 2026-05-22 — `750e14b0`
 

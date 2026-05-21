@@ -148,6 +148,74 @@
 |------|------|------|
 | `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |
 
+## ShaderEnvironmentAPI
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `isIrisLoaded()` | `boolean` | 着色器环境检测与兼容性 API — 着色器保护 <p>提供 Iris/Oculus 光影模组的检测和兼容性配置， 确保自 |
+| `isShaderPackInUse()` | `boolean` | 检测当前是否启用了光影包（Iris shader pack）。 <p>优先使用 Iris 内部快速路径 {@code I |
+| `isUnknownShaderAllowed()` | `boolean` | 查询 Iris 是否允许未知着色器。 <p>返回 {@link net.irisshaders.iris.config. |
+| `setAllowUnknownShaders(boolean allow)` | `void` | 设置 Iris 是否允许未知着色器。 <p>当启用时，自定义 {@code ShaderInstance} 可在光影包激 |
+| `ensureShaderCompatibility()` | `boolean` | 确保自定义着色器兼容性 — 自动启用 allowUnknownShaders。 <p>在注册自定义着色器之前调用此方法， |
+| `isUnknownShaderAllowed()` | `return` | - |
+
+## ShaderManager
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `registerPreset(String name, ShaderDescriptor desc)` | `void` | 中央着色器管理器 — 管理多个着色器预设 (A/B/C/D) 并可运行时切换。 <p>每个 {@link ShaderP |
+| `ShaderPreset(name, desc)` | `new` | - |
+| `setActivePreset(String name)` | `void` | 切换当前激活的预设 |
+| `getActivePresetName()` | `String` | 获取当前激活的预设名 |
+| `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |
+| `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |
+| `hasItemEffect(ItemStack stack)` | `boolean` | 判断物品是否应用着色器效果 |
+| `hasArmorEffect(ItemStack stack)` | `boolean` | 判断盔甲是否应用着色器效果 |
+| `getItemRenderType()` | `RenderType` | 获取当前激活预设的物品 RenderType |
+| `IllegalStateException("No active shader preset")` | `new` | - |
+| `getItemGuiRenderType()` | `RenderType` | 获取当前激活预设的 GUI RenderType |
+| `IllegalStateException("No active shader preset")` | `new` | - |
+| `getItemDirectRenderType()` | `RenderType` | 获取当前激活预设的第一人称 RenderType |
+| `IllegalStateException("No active shader preset")` | `new` | - |
+| `getItemEntityRenderType()` | `RenderType` | 获取当前激活预设的实体 RenderType |
+| `IllegalStateException("No active shader preset")` | `new` | - |
+| `getArmorRenderType()` | `RenderType` | 获取当前激活预设的盔甲 RenderType |
+| `IllegalStateException("No active shader preset")` | `new` | - |
+| `getActiveItemShader()` | `ShaderInstance` | 获取当前激活预设的物品着色器 |
+| `getActiveArmorShader()` | `ShaderInstance` | 获取当前激活预设的盔甲着色器 |
+| `onRegisterShaders(RegisterShadersEvent event)` | `void` | - |
+| `ShaderInstance(event.getResourceProvider()` | `new` | - |
+| `ShaderInstance(event.getResourceProvider()` | `new` | - |
+| `ShaderStateShard(()` | `new` | - |
+| `TextureStateShard(TextureAtlas.LOCATION_BLOCKS, false, false)` | `new` | - |
+| `ShaderStateShard(()` | `new` | - |
+| `TransparencyStateShard("film_trans",
+                ()` | `new` | - |
+| `DepthTestStateShard("<=", 515)` | `new` | - |
+| `ShaderDescriptor(String namespace,           // modid
+            String item...)` | `record` | 着色器预设描述符（下游模组注册时传入） |
+
+## ShaderProtectionRegistry
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `registerShader(ResourceLocation id, VertexFormat vertexFormat)` | `void` | 着色器注册保护注册表 — 受 Iris 保护的着色器注册中心 <p>下游模组通过此注册表提交需要 Iris 光影兼容保护 |
+| `IllegalArgumentException("Shader id must not be null")` | `new` | - |
+| `IllegalArgumentException("VertexFormat must not be null")` | `new` | - |
+| `for(ShaderEntry entry : ENTRIES)` | `避免重复注册` | - |
+| `ShaderEntry(id, vertexFormat)` | `new` | - |
+| `getShader(ResourceLocation id)` | `ShaderInstance` | 获取已注册并加载完成的 {@link ShaderInstance}。 <p>必须在 {@link RegisterSh |
+| `getAllEntries()` | `List<ShaderEntry>` | 获取所有已注册的着色器条目（只读快照）。 |
+| `isShaderLoaded(ResourceLocation id)` | `boolean` | 检查指定着色器是否已成功加载。 |
+| `onRegisterShaders(RegisterShadersEvent event)` | `void` | 处理 {@link RegisterShadersEvent}— 自动注册所有受保护的着色器。 <p>在前置库客户端初始 |
+| `if(ShaderEnvironmentAPI.isIrisLoaded()` | `else` | - |
+| `ensured(allowUnknownShaders={})` | `compatibility` | - |
+| `for(ShaderEntry entry : ENTRIES)` | `批量注册着色器` | - |
+| `ShaderInstance(event.getResourceProvider()` | `new` | - |
+| `ShaderEntry(ResourceLocation id, VertexFormat vertexFormat)` | `record` | 着色器注册条目。 |
+| `IllegalArgumentException("id must not be null")` | `new` | - |
+| `IllegalArgumentException("vertexFormat must not be null")` | `new` | - |
+
 ## SpecialDamageAttributeRegistry
 
 | 方法 | 返回 | 说明 |
@@ -158,6 +226,32 @@
 | `getTrueDamageTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册真实伤害属性的总值（已乘缩放系数）。 |
 | `getArmorPiercingTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册破甲伤害属性的总值（已乘缩放系数）。 |
 | `hasPierceInvulnerability(LivingEntity attacker)` | `boolean` | 检查攻击者是否拥有破无敌帧属性（总值 > 0）。 |
+
+## StarShaderRegistry
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `registerStarItem(Predicate<ItemStack> predicate)` | `void` | 星空着色器注册表 — 着色器渲染对接 API（A层→B层桥梁） <p>前置库提供星空着色器渲染能力，下游模组通过此 AP |
+| `IllegalArgumentException("predicate must not be null")` | `new` | - |
+| `registered(total: {})` | `predicate` | - |
+| `registerStarArmor(Predicate<ItemStack> predicate)` | `void` | 注册一个盔甲谓词：匹配的盔甲在实体上渲染时叠加星空效果。 |
+| `IllegalArgumentException("predicate must not be null")` | `new` | - |
+| `registered(total: {})` | `predicate` | - |
+| `hasStarEffect(ItemStack stack)` | `boolean` | 供 Mixin 判断物品是否需要星空叠加。 |
+| `hasStarArmorEffect(ItemStack stack)` | `boolean` | 供 Mixin 判断盔甲是否需要星空叠加。 |
+| `getStarArmorShader()` | `ShaderInstance` | - |
+| `starGlint()` | `RenderType` | - |
+| `IllegalStateException("Star shader not yet registered")` | `new` | - |
+| `starGlintDirect()` | `RenderType` | - |
+| `IllegalStateException("Star shader not yet registered")` | `new` | - |
+| `starEntityGlint()` | `RenderType` | - |
+| `IllegalStateException("Star shader not yet registered")` | `new` | - |
+| `starArmorGlint()` | `RenderType` | - |
+| `IllegalStateException("Star shader not yet registered")` | `new` | - |
+| `onRegisterShaders(RegisterShadersEvent event)` | `void` | SRC_COLOR + ONE 叠加混合 → 原色变亮，暗色叠加星辉 */ private static final T |
+| `ShaderInstance(event.getResourceProvider()` | `new` | - |
+| `ShaderInstance(event.getResourceProvider()` | `new` | - |
+| `TextureStateShard(TextureAtlas.LOCATION_BLOCKS, false, false)` | `new` | - |
 
 ## UndyingRegistry
 

@@ -61,6 +61,8 @@ plugins:
 
 nav:
   - 🏠 首页: index.md
+  - 🏗️ 整体蓝图:
+      - architecture/blueprint.md
   - 📖 API 参考:
       - api/index.md
       - api/yizmodqzk-api.md

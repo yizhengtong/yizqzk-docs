@@ -117,8 +117,24 @@
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |"
     },
     {
+      "title": "ShaderEnvironmentAPI",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isIrisLoaded()` | `boolean` | 着色器环境检测与兼容性 API — 着色器保护 <p>提供 Iris/Oculus 光影模组的检测和兼容性配置， 确保自 |\n| `isShaderPackInUse()` | `boolean` | 检测当前是否启用了光影包（Iris shader pack）。 <p>优先使用 Iris 内部快速路径 {@code I |\n| `isUnknownShaderAllowed()` | `boolean` | 查询 Iris 是否允许未知着色器。 <p>返回 {@link net.irisshaders.iris.config. |\n| `setAllowUnknownShaders(boolean allow)` | `void` | 设置 Iris 是否允许未知着色器。 <p>当启用时，自定义 {@code ShaderInstance} 可在光影包激 |\n| `ensureShaderCompatibility()` | `boolea"
+    },
+    {
+      "title": "ShaderManager",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPreset(String name, ShaderDescriptor desc)` | `void` | 中央着色器管理器 — 管理多个着色器预设 (A/B/C/D) 并可运行时切换。 <p>每个 {@link ShaderP |\n| `ShaderPreset(name, desc)` | `new` | - |\n| `setActivePreset(String name)` | `void` | 切换当前激活的预设 |\n| `getActivePresetName()` | `String` | 获取当前激活的预设名 |\n| `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |\n| `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |\n| `hasItemEffect(ItemSt"
+    },
+    {
+      "title": "ShaderProtectionRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerShader(ResourceLocation id, VertexFormat vertexFormat)` | `void` | 着色器注册保护注册表 — 受 Iris 保护的着色器注册中心 <p>下游模组通过此注册表提交需要 Iris 光影兼容保护 |\n| `IllegalArgumentException(\"Shader id must not be null\")` | `new` | - |\n| `IllegalArgumentException(\"VertexFormat must not be null\")` | `new` | - |\n| `for(ShaderEntry entry : ENTRIES)` | `避免重复注册` | - |\n| `ShaderEntry(id, vertexFormat)` | `new` | - |\n| `getShader(ResourceLocation id)` | `ShaderInstance` | 获取已注册并加载完成的 "
+    },
+    {
       "title": "SpecialDamageAttributeRegistry",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerTrueDamage(Holder<Attribute> holder, float scale)` | `void` | 特殊伤害属性注册表 <p> 注册的属性将自动作为真实伤害/破甲伤害/破无敌帧的数值来源。 攻击者每次近战攻击时，自动计算 |\n| `registerArmorPiercing(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破甲伤害属性。 <p> 攻击者每拥有 1 点该属性，每次近战攻击附加 {@code scale} 点破甲伤 |\n| `registerPierceInvulnerability(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破无敌帧属性。 <p> 攻击者拥有该属性时（总值 > 0），破甲伤害同时无视无敌帧。 单独注册该属性但不注 |\n| `getTrueDamageTotal(LivingEntity att"
+    },
+    {
+      "title": "StarShaderRegistry",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStarItem(Predicate<ItemStack> predicate)` | `void` | 星空着色器注册表 — 着色器渲染对接 API（A层→B层桥梁） <p>前置库提供星空着色器渲染能力，下游模组通过此 AP |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |\n| `registerStarArmor(Predicate<ItemStack> predicate)` | `void` | 注册一个盔甲谓词：匹配的盔甲在实体上渲染时叠加星空效果。 |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |"
     },
     {
       "title": "UndyingRegistry",
@@ -288,6 +304,34 @@
     }
   ],
   "changelog": [
+    {
+      "title": "2026-05-22 — `e2497663`",
+      "content": "fix: flight speed 1.2x + instant stop on key release"
+    },
+    {
+      "title": "2026-05-22 — `4a9eee03`",
+      "content": "feat: cosmic2 shader preset — star flares + HSV nebula"
+    },
+    {
+      "title": "2026-05-22 — `c19c3926`",
+      "content": "feat: ShaderManager — central shader preset registry with runtime switching"
+    },
+    {
+      "title": "2026-05-22 — `ee7ed09c`",
+      "content": "fix: shader compilation — GLSL simplification, armor null-guard, uniform naming"
+    },
+    {
+      "title": "2026-05-22 — `6d08c6f6`",
+      "content": "feat: shader rendering system — star film overlay via core shaders"
+    },
+    {
+      "title": "2026-05-22 — `384481b7`",
+      "content": "docs: add architecture blueprint ref + current focus area to CLAUDE.md"
+    },
+    {
+      "title": "2026-05-22 — `6c5df5e9`",
+      "content": "docs: add AI quick entry for YIZwikl docs site"
+    },
     {
       "title": "2026-05-22 — `750e14b0`",
       "content": "更新 CLAUDE.md：补充注册表 API 文档（10 个 Registry + PlayerDataAPI）"
