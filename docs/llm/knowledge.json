@@ -122,7 +122,7 @@
     },
     {
       "title": "ShaderManager",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPreset(String name, ShaderDescriptor desc)` | `void` | 中央着色器管理器 — 管理多个着色器预设 (A/B/C/D) 并可运行时切换。 <p>每个 {@link ShaderP |\n| `ShaderPreset(name, desc)` | `new` | - |\n| `setActivePreset(String name)` | `void` | 切换当前激活的预设 |\n| `getActivePresetName()` | `String` | 获取当前激活的预设名 |\n| `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |\n| `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |\n| `hasItemEffect(ItemSt"
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPreset(String name, ShaderDescriptor desc)` | `void` | 中央着色器管理器 — 管理多个着色器预设 (A/B/C/D) 并可运行时切换。 <p>每个 {@link ShaderP |\n| `ShaderPreset(name, desc)` | `new` | - |\n| `setActivePreset(String name)` | `void` | 切换当前激活的预设 |\n| `getActivePresetName()` | `String` | 获取当前激活的预设名 |\n| `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |\n| `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |\n| `setCosmicUVs(float[]"
     },
     {
       "title": "ShaderProtectionRegistry",

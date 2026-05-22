@@ -169,6 +169,8 @@
 | `getActivePresetName()` | `String` | 获取当前激活的预设名 |
 | `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |
 | `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |
+| `setCosmicUVs(float[] uvs)` | `void` | 设置 cosmic 图标 UV |
+| `applyCosmicUVs(ShaderInstance shader)` | `void` | 将 UV 写入着色器的 cosmicuvs uniform（供 Mixin 调用） |
 | `hasItemEffect(ItemStack stack)` | `boolean` | 判断物品是否应用着色器效果 |
 | `hasArmorEffect(ItemStack stack)` | `boolean` | 判断盔甲是否应用着色器效果 |
 | `getItemRenderType()` | `RenderType` | 获取当前激活预设的物品 RenderType |
