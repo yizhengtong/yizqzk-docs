@@ -1,10 +1,14 @@
 # 变更日志
 
-最后更新: 2026-05-23 03:28
+最后更新: 2026-05-23 04:56
 
 来源仓库: `D:/ZM/yiz1.21.1`
 
 ---
+
+### 2026-05-23 — `4539319d`
+
+fix: star armor rendering — split z/non-z pipeline, fix depth write & alpha
 
 ### 2026-05-22 — `e2497663`
 

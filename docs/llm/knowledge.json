@@ -305,6 +305,10 @@
   ],
   "changelog": [
     {
+      "title": "2026-05-23 — `4539319d`",
+      "content": "fix: star armor rendering — split z/non-z pipeline, fix depth write & alpha"
+    },
+    {
       "title": "2026-05-22 — `e2497663`",
       "content": "fix: flight speed 1.2x + instant stop on key release"
     },

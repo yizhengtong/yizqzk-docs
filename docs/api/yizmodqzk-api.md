@@ -191,6 +191,11 @@
 | `ShaderStateShard(()` | `new` | - |
 | `TextureStateShard(TextureAtlas.LOCATION_BLOCKS, false, false)` | `new` | - |
 | `ShaderStateShard(()` | `new` | - |
+| `getArmorStarOverlayType()` | `RenderType` | 为非 z 系列 TAIL 叠加创建 RenderType。使用 EQUAL 深度测试， 确保星空只渲染在原版盔甲已写入深 |
+| `ShaderStateShard(()` | `new` | - |
+| `TextureStateShard(TextureAtlas.LOCATION_BLOCKS, false, false)` | `new` | - |
+| `create("shader_" + preset.name + "_armor_overlay",
+                ...)` | `return` | - |
 | `TransparencyStateShard("film_trans",
                 ()` | `new` | - |
 | `DepthTestStateShard("<=", 515)` | `new` | - |
