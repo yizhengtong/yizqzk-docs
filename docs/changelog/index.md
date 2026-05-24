@@ -1,10 +1,50 @@
 # 变更日志
 
-最后更新: 2026-05-24 01:06
+最后更新: 2026-05-24 09:37
 
-来源仓库: `D:/ZM/yiz1.21.1`
+来源仓库: `/mnt/d/ZM/yizgzq/yiz1.21.1`
 
 ---
+
+### 2026-05-24 — `41b02dbe`
+
+chore: add build_dead/ to .gitignore; remove build_dead from tracking
+
+### 2026-05-24 — `ff83aa53`
+
+fix: HumanoidArmorLayerStarMixin now catches unregistered PlayerData key instead of crashing
+
+### 2026-05-24 — `932d3953`
+
+fix: add neo_version_range to replaceProperties for template expansion
+
+### 2026-05-24 — `3c8ad7e2`
+
+fix: 8 P1 code quality issues
+
+### 2026-05-24 — `8dec58a5`
+
+fix: P0 bugs across damage/effect/mixin modules
+
+### 2026-05-24 — `80155a29`
+
+relax Neo version range to [21.1,22.0) — accept entire 21.x series
+
+### 2026-05-24 — `95b7d145`
+
+relax Neo version range to [21.1.227,21.2) in mods.toml
+
+### 2026-05-24 — `d1f60ca1`
+
+add cosmic3 and cosmic4 shader pipeline files
+
+### 2026-05-24 — `9ad47680`
+
+normalize line endings
+
+### 2026-05-24 — `0f957f11`
+
+fix: shader rendering + flight API + NeoForge version rollback
 
 ### 2026-05-23 — `4539319d`
 

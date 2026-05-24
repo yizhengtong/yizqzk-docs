@@ -12,8 +12,8 @@ import re
 import json
 from pathlib import Path
 
-YIZ_SRC = Path("D:/ZM/yiz1.21.1/src/main/java")
-DOCS_API = Path("D:/ZM/yizqzk-docs/docs/api")
+YIZ_SRC = Path("/mnt/d/ZM/yizgzq/yiz1.21.1/src/main/java")
+DOCS_API = Path("/mnt/d/ZM/yizgzq/yizqzk-docs/docs/api")
 
 def extract_javadoc_and_signature(filepath):
     """提取 Java 文件中的 Javadoc + 方法签名"""

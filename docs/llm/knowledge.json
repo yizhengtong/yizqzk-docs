@@ -305,6 +305,46 @@
   ],
   "changelog": [
     {
+      "title": "2026-05-24 — `41b02dbe`",
+      "content": "chore: add build_dead/ to .gitignore; remove build_dead from tracking"
+    },
+    {
+      "title": "2026-05-24 — `ff83aa53`",
+      "content": "fix: HumanoidArmorLayerStarMixin now catches unregistered PlayerData key instead of crashing"
+    },
+    {
+      "title": "2026-05-24 — `932d3953`",
+      "content": "fix: add neo_version_range to replaceProperties for template expansion"
+    },
+    {
+      "title": "2026-05-24 — `3c8ad7e2`",
+      "content": "fix: 8 P1 code quality issues"
+    },
+    {
+      "title": "2026-05-24 — `8dec58a5`",
+      "content": "fix: P0 bugs across damage/effect/mixin modules"
+    },
+    {
+      "title": "2026-05-24 — `80155a29`",
+      "content": "relax Neo version range to [21.1,22.0) — accept entire 21.x series"
+    },
+    {
+      "title": "2026-05-24 — `95b7d145`",
+      "content": "relax Neo version range to [21.1.227,21.2) in mods.toml"
+    },
+    {
+      "title": "2026-05-24 — `d1f60ca1`",
+      "content": "add cosmic3 and cosmic4 shader pipeline files"
+    },
+    {
+      "title": "2026-05-24 — `9ad47680`",
+      "content": "normalize line endings"
+    },
+    {
+      "title": "2026-05-24 — `0f957f11`",
+      "content": "fix: shader rendering + flight API + NeoForge version rollback"
+    },
+    {
       "title": "2026-05-23 — `4539319d`",
       "content": "fix: star armor rendering — split z/non-z pipeline, fix depth write & alpha"
     },

@@ -11,8 +11,8 @@ import os
 from pathlib import Path
 from datetime import datetime
 
-DOCS_CHANGELOG = Path("D:/ZM/yizqzk-docs/docs/changelog/index.md")
-REPO_PATH = "D:/ZM/yiz1.21.1"
+DOCS_CHANGELOG = Path("/mnt/d/ZM/yizgzq/yizqzk-docs/docs/changelog/index.md")
+REPO_PATH = "/mnt/d/ZM/yizgzq/yiz1.21.1"
 
 def run_git_log():
     os.chdir(REPO_PATH)
