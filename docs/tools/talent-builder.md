@@ -45,25 +45,11 @@
 <noscript><p style="color:var(--c-danger)">此工具需要 JavaScript。</p></noscript>
 
 <div class="tb-section">
-<h3>基础信息</h3>
+<h3>天赋名称</h3>
 <div class="tb-row">
-<div class="tb-field" style="min-width:250px;">
-<label>天赋名称 <span class="hint">最终类名会加上 Effect 后缀</span></label>
+<div class="tb-field" style="min-width:300px;">
+<label>名称 <span class="hint">类名会自动加 Effect 后缀；效果 ID 自动生成</span></label>
 <input type="text" id="name" placeholder="例如：烈焰之触" oninput="livePreview()">
-</div>
-<div class="tb-field">
-<label>Mod ID</label>
-<input type="text" id="modid" value="yizxianmod" oninput="livePreview()">
-</div>
-</div>
-<div class="tb-row">
-<div class="tb-field">
-<label>效果 ID <span class="hint">ResourceLocation 路径部分</span></label>
-<input type="text" id="effid" placeholder="flame_touch" oninput="livePreview()">
-</div>
-<div class="tb-field">
-<label>包名</label>
-<input type="text" id="pkg" value="net.minecraft.client.yiz.xian.effect" oninput="livePreview()">
 </div>
 </div>
 </div>
@@ -82,11 +68,8 @@
 <div class="tb-section">
 <h3>二、最大等级</h3>
 <div style="display:flex;align-items:center;gap:10px;">
-<label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-<input type="checkbox" id="has-level" onchange="toggleLevel();livePreview();"> 启用等级上限
-</label>
-<input type="number" id="max-level" value="1" min="1" max="100" style="width:80px;" disabled oninput="livePreview()">
-<span class="hint">不勾选则默认等级 = 1</span>
+<input type="number" id="max-level" value="1" min="1" max="100" style="width:80px;" oninput="livePreview()">
+<span class="hint">直接填写最大等级数</span>
 </div>
 </div>
 
@@ -214,13 +197,12 @@ function getPerception() {
 }
 
 function buildData() {
+  var name = val('name') || '未命名天赋';
   return {
-    name: val('name') || '未命名天赋',
-    modid: val('modid') || 'yizxianmod',
-    effid: val('effid') || '',
-    pkg: val('pkg') || 'net.minecraft.client.yiz.xian.effect',
+    name: name,
+    effid: name.replace(/[^a-zA-Z0-9一-鿿]+/g, '_').toLowerCase() || 'untitled',
     parent: checkedVal('parent') || 'ECHO',
-    maxLevel: $('has-level').checked ? parseInt(val('max-level'))||1 : 1,
+    maxLevel: parseInt(val('max-level'))||1,
     perception: getPerception(),
     rarity: checkedVal('rarity') || 'EPIC',
     cooldown: $('has-cd').checked ? parseInt(val('cd-ticks'))||0 : 0,
@@ -236,7 +218,6 @@ function livePreview() {
   $('preview').textContent = JSON.stringify(buildData(), null, 2);
 }
 
-function toggleLevel() { $('max-level').disabled = !$('has-level').checked; }
 function toggleCd() { $('cd-ticks').disabled = !$('has-cd').checked; $('cd-row').classList.toggle('show',$('has-cd').checked); }
 
 function toggleSub() {
@@ -283,5 +264,5 @@ function showMsg(text, type) {
   setTimeout(function(){ m.textContent=''; }, 5000);
 }
 
-toggleLevel(); toggleCd(); toggleSub(); livePreview();
+toggleCd(); toggleSub(); livePreview();
 </script>
