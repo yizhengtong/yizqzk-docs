@@ -75,5 +75,7 @@ nav:
       - knowledge/geckolib-fix.md
   - 📝 变更日志:
       - changelog/index.md
+  - 🛠️ 工具:
+      - tools/talent-builder.md
   - 🤖 AI 知识库:
       - llm/index.md
