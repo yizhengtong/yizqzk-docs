@@ -85,6 +85,14 @@
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `DamageResult(float applied,\n    float delta,\n    boolean canceled,\n    St...)` | `record` | 伤害应用结果 |\n| `success(float applied, float delta)` | `DamageResult` | - |\n| `DamageResult(applied, delta, false, \"\")` | `new` | - |\n| `canceled(String reason)` | `DamageResult` | - |\n| `DamageResult(0, 0, true, reason)` | `new` | - |"
     },
     {
+      "title": "DaoPalace",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `DaoPalace(ResourceLocation anchorId,\n    BlockPos centerPos,\n    int s...)` | `record` | 道宫数据记录 [record] — 一座道宫的所有状态。 <p> 道宫是在固定坐标建造的立方体建筑。 边长 L 只增不减 |\n| `currentVolume()` | `int` | 当前正方体体积（已用/最大） |\n| `maxVolume()` | `int` | 当前边长对应的最大方块数 |\n| `costToExpand()` | `int` | 根据蓝图公式计算下一级需要的方块数： [(L+2)³ − L³] / (10 × 落点总数²) |\n| `influenceRange()` | `double` | 影响力范围 = L × 4^落点总数。 |\n| `withBlock(BlockPos pos)` | `DaoPalace` | 添加一个坐标到已放置集合（返回新 record） |\n| `DaoPalac"
+    },
+    {
+      "title": "DaoPalaceAPI",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `initDataKey()` | `void` | 道宫 API — 落点管理、方块放置、范围计算、属性增益。 <p> 前置库提供框架，下游模组（yizxian）负责落点激 |\n| `activateAnchor(ServerPlayer player, ResourceLocation anchorId,\n            ...)` | `DaoPalace` | 激活一个新落点（建造一座新道宫）。 |\n| `DaoPalace(anchorId, centerPos, 1, Collections.emptySet()` | `new` | - |\n| `getPalaces(Player player)` | `List<DaoPalace>` | 获取玩家的所有道宫。 |\n| `getPalace(Player player, ResourceLocation anchorId)` | `DaoPalace` | 获取玩家指定落点的道宫，不存在返回 null。 |\n| `getPala"
+    },
+    {
       "title": "FlightAbilityRegistry",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `mayFly()` | `强制` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |"
     },
@@ -115,6 +123,14 @@
     {
       "title": "ProjectileReflectionSystem",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |"
+    },
+    {
+      "title": "RealmProgressionAPI",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStage(RealmStage stage)` | `void` | 境界跨度 API — 境界注册、突破触发、属性叠加计算 <p> 前置库提供框架，下游模组（yizxian）定义具体境界和 |\n| `initDataKey()` | `void` | 初始化境界存储（在 PlayerDataAPI 注册 DATA_KEY 后调用一次）。 |\n| `getCurrentStage(Player player)` | `RealmStage` | 获取玩家当前境界，未突破过返回 null，未注册任何境界返回 null。 |\n| `getStage(ResourceLocation id)` | `RealmStage` | 获取指定 ID 的境界，不存在返回 null。 |\n| `getStartingStage()` | `RealmStage` | 获取起始境界（order 最小者），未注册返回 null。 |\n| `getAllStages()` | `List<RealmSta"
+    },
+    {
+      "title": "RealmStage",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `RealmStage(ResourceLocation id,\n    int order,\n    String displayName,\n...)` | `record` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |\n| `RealmStage(ResourceLocation id, int order, String displayName, Map<Stri...)` | `public` | - |\n| `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 无属性加成的境界 |"
     },
     {
       "title": "ShaderEnvironmentAPI",

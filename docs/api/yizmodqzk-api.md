@@ -63,6 +63,7 @@
 | `modify(LivingEntity entity, float oldHealth, float newHealth)` | `float` | 健康值修改器，在 setHealth() 最终写入前执行 / public interface HealthModifi |
 | `register(HealthModifier modifier)` | `void` | 注册一个健康值修改器 |
 | `applyBeforeSetHealth(LivingEntity entity, float newHealth)` | `float` | 由 ASM Agent 在 setHealth(float) 入口调用 |
+| `if(newHealth <= 0)` | `不拦截` | - |
 
 ## DamageResult
 
@@ -76,6 +77,45 @@
 | `DamageResult(applied, delta, false, "")` | `new` | - |
 | `canceled(String reason)` | `DamageResult` | - |
 | `DamageResult(0, 0, true, reason)` | `new` | - |
+
+## DaoPalace
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `DaoPalace(ResourceLocation anchorId,
+    BlockPos centerPos,
+    int s...)` | `record` | 道宫数据记录 [record] — 一座道宫的所有状态。 <p> 道宫是在固定坐标建造的立方体建筑。 边长 L 只增不减 |
+| `currentVolume()` | `int` | 当前正方体体积（已用/最大） |
+| `maxVolume()` | `int` | 当前边长对应的最大方块数 |
+| `costToExpand()` | `int` | 根据蓝图公式计算下一级需要的方块数： [(L+2)³ − L³] / (10 × 落点总数²) |
+| `influenceRange()` | `double` | 影响力范围 = L × 4^落点总数。 |
+| `withBlock(BlockPos pos)` | `DaoPalace` | 添加一个坐标到已放置集合（返回新 record） |
+| `DaoPalace(anchorId, centerPos, sideLength, newBlocks, totalAnchors)` | `new` | - |
+| `withSideLength(int newSideLength)` | `DaoPalace` | 进阶到新边长（返回新 record） |
+| `DaoPalace(anchorId, centerPos, newSideLength, placedBlocks, totalAncho...)` | `new` | - |
+| `withTotalAnchors(int newTotal)` | `DaoPalace` | 更新落点总数 |
+| `DaoPalace(anchorId, centerPos, sideLength, placedBlocks, newTotal)` | `new` | - |
+
+## DaoPalaceAPI
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `initDataKey()` | `void` | 道宫 API — 落点管理、方块放置、范围计算、属性增益。 <p> 前置库提供框架，下游模组（yizxian）负责落点激 |
+| `activateAnchor(ServerPlayer player, ResourceLocation anchorId,
+            ...)` | `DaoPalace` | 激活一个新落点（建造一座新道宫）。 |
+| `DaoPalace(anchorId, centerPos, 1, Collections.emptySet()` | `new` | - |
+| `getPalaces(Player player)` | `List<DaoPalace>` | 获取玩家的所有道宫。 |
+| `getPalace(Player player, ResourceLocation anchorId)` | `DaoPalace` | 获取玩家指定落点的道宫，不存在返回 null。 |
+| `getPalacesInternal(player)` | `return` | - |
+| `canPlaceBlock(Player player, BlockPos pos)` | `boolean` | 检查方块是否在道宫的正方体范围内（±L）。 |
+| `placeBlock(ServerPlayer player, BlockPos pos)` | `DaoPalace` | 在道宫中放置一个方块（自动归属到包含此坐标的道宫）。 方块数达标时自动触发边长进阶。 |
+| `while(updated.currentVolume()` | `自动进阶` | - |
+| `getStatGains(Player player, BlockPos playerPos)` | `Map<String, Double>` | 获取玩家所有道宫叠加后的属性增益。 <p> 每座道宫独立计算：终端衰减 × 边长加成，然后各道宫之和。 边长加成 = 1 |
+| `getStatGain(DaoPalace palace, BlockPos playerPos, double baseStat)` | `double` | 获取指定道宫的属性增益（终端衰减）。 |
+| `onChange(BiConsumer<ServerPlayer, DaoPalace> listener)` | `void` | 注册道宫变更监听器（方块放置、进阶时触发）。 |
+| `setSyncCallback(BiConsumer<ServerPlayer, List<DaoPalace>> callback)` | `void` | - |
+| `syncToClient(ServerPlayer player)` | `void` | 向客户端同步所有道宫数据。 |
+| `DaoPalace(id, pos, len, new HashSet<>(blocks)` | `new` | - |
 
 ## FlightAbilityRegistry
 
@@ -147,6 +187,36 @@
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |
+
+## RealmProgressionAPI
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `registerStage(RealmStage stage)` | `void` | 境界跨度 API — 境界注册、突破触发、属性叠加计算 <p> 前置库提供框架，下游模组（yizxian）定义具体境界和 |
+| `initDataKey()` | `void` | 初始化境界存储（在 PlayerDataAPI 注册 DATA_KEY 后调用一次）。 |
+| `getCurrentStage(Player player)` | `RealmStage` | 获取玩家当前境界，未突破过返回 null，未注册任何境界返回 null。 |
+| `getStage(ResourceLocation id)` | `RealmStage` | 获取指定 ID 的境界，不存在返回 null。 |
+| `getStartingStage()` | `RealmStage` | 获取起始境界（order 最小者），未注册返回 null。 |
+| `getAllStages()` | `List<RealmStage>` | 获取所有境界，按 order 升序排列。 |
+| `getNextStage(Player player)` | `RealmStage` | 获取比当前境界高一级的下一个境界。 无境界时返回起始境界（筑命），已是最高境界返回 null。 |
+| `getStartingStage()` | `return` | - |
+| `breakthrough(ServerPlayer player, ResourceLocation stageId)` | `boolean` | 执行境界突破：设置玩家当前境界、触发事件、同步客户端。 |
+| `for(BiConsumer<ServerPlayer, RealmStage> listener : breakthrough...)` | `触发事件` | - |
+| `sendSync(player)` | `同步到客户端` | - |
+| `onBreakthrough(BiConsumer<ServerPlayer, RealmStage> listener)` | `void` | 注册突破事件监听器。 每次突破时回调，可用于播放特效、发送聊天消息等。 |
+| `getCumulativeModifiers(Player player)` | `Map<String, Double>` | 获取玩家当前境界及之前所有境界的属性叠加（累积）。 <p> 例如：筑命 attack=1.20，谌我 attack=1. |
+| `syncToClient(ServerPlayer player)` | `void` | 同步回调：由 NetworkHandler 注入 */ static volatile BiConsumer<Serve |
+
+## RealmStage
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `RealmStage(ResourceLocation id,
+    int order,
+    String displayName,
+...)` | `record` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |
+| `RealmStage(ResourceLocation id, int order, String displayName, Map<Stri...)` | `public` | - |
+| `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 无属性加成的境界 |
 
 ## ShaderEnvironmentAPI
 
@@ -292,6 +362,8 @@
 | `getDamageAttributeValue(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册伤害属性的总值。 |
 | `modifyHealth(LivingEntity target, float delta)` | `void` | 直接增减实体健康值（治疗或伤害）。 <p> 正数 = 治疗，负数 = 伤害。<br> 经过三層系统修改所有 Float  |
 | `setHealth(LivingEntity target, float health)` | `void` | 直接设置实体健康值（绝对值）。 <p> 与 {@link #modifyHealth} 一样绕过 {@code hurt |
+| `healthRegen(LivingEntity target, float amount)` | `void` | Delta 通道持续回血——走 {@link #modifyHealth} 绕过原版 {@code heal()}。 < |
+| `healWithFoodBonus(LivingEntity target, float amount)` | `void` | 饱食增幅回血——满血不拦截，走 Delta 通道填到上限。 <p> 跟 {@link #healthRegen} 的区别 |
 | `setDamageEffectsEnabled(boolean enabled)` | `void` | 设置 Delta 改血系统是否触发受伤动画和音效。 <p> 开启后，通过 {@link #damage} / {@lin |
 | `isDamageEffectsEnabled()` | `boolean` | 查询 Delta 伤害效果开关状态。 |
 | `setHealBan(LivingEntity entity, float percent, float fixedAmount)` | `void` | 从健康值根本禁止治疗（百分比 + 固定值）。 <p> 在 {@code modifyHealth} 和 {@code H |
@@ -306,7 +378,7 @@
 | `dispatchContext(EffectContext context)` | `void` | 分发效果上下文（触发效果系统）。 |
 | `getAllEffects()` | `List<AbstractEffect>` | 获取所有注册的效果。 |
 | `getEntityTalents(LivingEntity entity)` | `List<AbstractEffect>` | 获取实体所有已解锁的天赋。 <p> 自动过滤出 {@link net.minecraft.client.yiz.effe |
-| `refreshUI()` | `void` | 请求刷新所有 YizMod QZK UI 组件。 <p> 下游模组在解锁新天赋、变更效果或需要重新渲染 UI 时调用此方 |
+| `refreshUI()` | `void` | 按稀有度统计实体已解锁天赋数量。 <p> 返回 Map 包含以下键：{@code total}（总数）、{@code m |
 | `getAttackDamage(ItemStack stack)` | `double` | - |
 | `setAttackDamage(ItemStack stack, double value)` | `void` | - |
 | `addAttackDamage(ItemStack stack, double delta)` | `void` | - |
