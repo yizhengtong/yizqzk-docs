@@ -2,363 +2,286 @@
 
 <style>
 :root {
-  --bg: #f5f5f5;
-  --card: #ffffff;
-  --border: #e0e0e0;
-  --text: #333;
-  --muted: #888;
-  --accent: #3f51b5;
-  --accent-hover: #303f9f;
-  --code-bg: #1e1e2e;
-  --code-text: #cdd6f4;
-  --tag-bg: #e8eaf6;
-  --tag-text: #3f51b5;
-  --danger: #e53935;
-  --success: #43a047;
+  --c-bg:#fff;--c-card:#f8f9fa;--c-border:#dee2e6;--c-text:#212529;
+  --c-muted:#6c757d;--c-accent:#3f51b5;--c-on-accent:#fff;
+  --c-danger:#dc3545;--c-success:#198754;--c-tag-bg:#e8eaf6;--c-tag-text:#3f51b5;
 }
 [data-md-color-scheme="slate"] {
-  --bg: #1a1a2e;
-  --card: #22223a;
-  --border: #333;
-  --text: #cdd6f4;
-  --muted: #888;
-  --accent: #7986cb;
-  --accent-hover: #9fa8da;
-  --code-bg: #11111b;
-  --tag-bg: #2a2a4a;
-  --tag-text: #7986cb;
+  --c-bg:#1a1a2e;--c-card:#22223a;--c-border:#333;--c-text:#cdd6f4;
+  --c-muted:#888;--c-accent:#7986cb;--c-on-accent:#111;
+  --c-tag-bg:#2a2a4a;--c-tag-text:#7986cb;
 }
+.tb-form { max-width:720px; color:var(--c-text); }
+.tb-section { background:var(--c-card); border:1px solid var(--c-border); border-radius:8px; padding:16px; margin-bottom:14px; }
+.tb-section h3 { margin:0 0 12px; font-size:15px; color:var(--c-accent); }
+.tb-row { display:flex; gap:10px; flex-wrap:wrap; }
+.tb-field { flex:1; min-width:160px; margin-bottom:10px; }
+.tb-field label { display:block; font-size:13px; font-weight:600; margin-bottom:4px; }
+.tb-field .hint { font-size:11px; color:var(--c-muted); font-weight:400; }
+.tb-field input[type=text],
+.tb-field input[type=number],
+.tb-field textarea,
+.tb-field select { width:100%; padding:7px 10px; border:1px solid var(--c-border); border-radius:5px; background:var(--c-bg); color:var(--c-text); font-size:13px; box-sizing:border-box; }
+.tb-field textarea { resize:vertical; min-height:60px; }
+.tb-check-group { display:flex; flex-wrap:wrap; gap:6px 14px; }
+.tb-check-group label { display:flex; align-items:center; gap:5px; font-size:13px; cursor:pointer; }
+.tb-check-group input[type=radio],
+.tb-check-group input[type=checkbox] { accent-color:var(--c-accent); }
+.tb-sub { margin-left:18px; padding:6px 0 0; border-left:2px solid var(--c-border); padding-left:12px; display:none; }
+.tb-sub.show { display:block; }
+.tb-sub label { font-size:12px; color:var(--c-muted); }
+.tb-btn { padding:10px 32px; border:none; border-radius:6px; font-size:15px; font-weight:600; cursor:pointer; }
+.tb-btn.primary { background:var(--c-accent); color:var(--c-on-accent); }
+.tb-btn.primary:hover { opacity:.85; }
+.tb-btn:disabled { opacity:.5; cursor:not-allowed; }
+.tb-msg { font-size:13px; margin-left:10px; }
+.tb-msg.ok { color:var(--c-success); }
+.tb-msg.err { color:var(--c-danger); }
+.tb-cd-row { display:none; margin-top:6px; }
+.tb-cd-row.show { display:flex; gap:8px; align-items:center; }
 </style>
 
-<div id="talent-app" style="font-family:var(--md-text-font);color:var(--text);">
-<noscript><p style="color:var(--danger)">此工具需要 JavaScript。</p></noscript>
+<div class="tb-form" id="app">
+<noscript><p style="color:var(--c-danger)">此工具需要 JavaScript。</p></noscript>
 
-## 基础信息
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-<div>
-<label>Mod ID <span style="color:var(--muted);font-size:12px">包路径 + 注册命名空间</span></label>
-<input id="modid" type="text" value="yizxianmod" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
+<div class="tb-section">
+<h3>基础信息</h3>
+<div class="tb-row">
+<div class="tb-field" style="min-width:250px;">
+<label>天赋名称 <span class="hint">最终类名会加上 Effect 后缀</span></label>
+<input type="text" id="name" placeholder="例如：烈焰之触" oninput="livePreview()">
 </div>
-<div>
-<label>包名 <span style="color:var(--muted);font-size:12px">Java 类所在包</span></label>
-<input id="pkg" type="text" value="net.minecraft.client.yiz.xian.effect" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
+<div class="tb-field">
+<label>Mod ID</label>
+<input type="text" id="modid" value="yizxianmod" oninput="livePreview()">
 </div>
 </div>
-
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
-<div>
-<label>类名</label>
-<input id="cls" type="text" value="FlameTouchEffect" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
+<div class="tb-row">
+<div class="tb-field">
+<label>效果 ID <span class="hint">ResourceLocation 路径部分</span></label>
+<input type="text" id="effid" placeholder="flame_touch" oninput="livePreview()">
 </div>
-<div>
-<label>效果 ID <span style="color:var(--muted);font-size:12px">ResourceLocation</span></label>
-<input id="effid" type="text" value="flame_touch" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
+<div class="tb-field">
+<label>包名</label>
+<input type="text" id="pkg" value="net.minecraft.client.yiz.xian.effect" oninput="livePreview()">
 </div>
-<div>
-<label>显示名称</label>
-<input id="dispname" type="text" value="烈焰之触" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
 </div>
 </div>
 
-## 六维配置
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-
-<div>
-<label>1. 父类别 ParentType</label>
-<select id="parent" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
-<option value="ECHO">ECHO 残响 — 攻击类效果</option>
-<option value="INSCRIPTION">INSCRIPTION 铭刻 — 回复类效果</option>
-<option value="MANIFESTATION">MANIFESTATION 显化 — 机制类效果</option>
-<option value="ORIGIN">ORIGIN 本形 — 防御类效果</option>
-<option value="ASCENSION">ASCENSION 升灵 — 被动类效果</option>
-</select>
+<div class="tb-section">
+<h3>一、父类别 ParentType <span class="hint">单选</span></h3>
+<div class="tb-check-group">
+<label><input type="radio" name="parent" value="ECHO" checked onchange="livePreview()"> ECHO 残响 — 攻击类</label>
+<label><input type="radio" name="parent" value="INSCRIPTION" onchange="livePreview()"> INSCRIPTION 铭刻 — 回复类</label>
+<label><input type="radio" name="parent" value="MANIFESTATION" onchange="livePreview()"> MANIFESTATION 显化 — 机制类</label>
+<label><input type="radio" name="parent" value="ORIGIN" onchange="livePreview()"> ORIGIN 本形 — 防御类</label>
+<label><input type="radio" name="parent" value="ASCENSION" onchange="livePreview()"> ASCENSION 升灵 — 被动类</label>
+</div>
 </div>
 
-<div>
-<label>2. 等级 Level</label>
-<input id="level" type="number" value="1" min="1" max="100" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
-</div>
-
-<div>
-<label>3. 感知方式 PerceptionMode <span style="color:var(--muted);font-size:12px">OR 逻辑，可多选</span></label>
-<div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-  <input type="checkbox" id="perc-entity" checked onchange="toggleEntityOpts()"> EntityPerception — 天赋（需解锁）
+<div class="tb-section">
+<h3>二、最大等级</h3>
+<div style="display:flex;align-items:center;gap:10px;">
+<label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+<input type="checkbox" id="has-level" onchange="toggleLevel();livePreview();"> 启用等级上限
 </label>
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-  <input type="checkbox" id="perc-item" onchange="toggleEntityOpts()"> ItemPerception — 词缀（绑定装备）
-</label>
-<div id="item-slot-opts" style="display:none;margin-left:24px;">
-  <label style="color:var(--muted);font-size:12px;">装备槽位：</label>
-  <div style="display:flex;flex-wrap:wrap;gap:6px;">
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-mainhand" checked> MAIN_HAND</label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-offhand"> OFF_HAND</label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-head"> HEAD</label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-chest"> CHEST</label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-legs"> LEGS</label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-feet"> FEET</label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" id="slot-inventory"> INVENTORY</label>
+<input type="number" id="max-level" value="1" min="1" max="100" style="width:80px;" disabled oninput="livePreview()">
+<span class="hint">不勾选则默认等级 = 1</span>
+</div>
+</div>
+
+<div class="tb-section">
+<h3>三、感知方式 PerceptionMode <span class="hint">可多选，OR 逻辑</span></h3>
+<div class="tb-check-group" style="margin-bottom:8px;">
+<label><input type="checkbox" class="perc-toggle" data-target="perc-entity-sub" checked onchange="toggleSub()"> 天赋 EntityPerception（需解锁）</label>
+<label><input type="checkbox" class="perc-toggle" data-target="perc-item-sub" onchange="toggleSub()"> 词缀 ItemPerception（绑定装备）</label>
+<label><input type="checkbox" class="perc-toggle" data-target="perc-container-sub" onchange="toggleSub()"> 随影 ContainerPerception（绑定容器）</label>
+<label><input type="checkbox" class="perc-toggle" data-target="perc-custom-sub" onchange="toggleSub()"> 自定义 CustomPerception</label>
+</div>
+<div id="perc-item-sub" class="tb-sub">
+  <div class="tb-check-group">
+    <label><input type="checkbox" class="item-slot" value="MAIN_HAND" checked> 主手 MAIN_HAND</label>
+    <label><input type="checkbox" class="item-slot" value="OFF_HAND"> 副手 OFF_HAND</label>
+    <label><input type="checkbox" class="item-slot" value="HEAD"> 头盔 HEAD</label>
+    <label><input type="checkbox" class="item-slot" value="CHEST"> 胸甲 CHEST</label>
+    <label><input type="checkbox" class="item-slot" value="LEGS"> 护腿 LEGS</label>
+    <label><input type="checkbox" class="item-slot" value="FEET"> 靴子 FEET</label>
+    <label><input type="checkbox" class="item-slot" value="INVENTORY"> 背包 INVENTORY</label>
   </div>
 </div>
+<div id="perc-container-sub" class="tb-sub">
+  <label style="display:flex;align-items:center;gap:8px;">
+    <input type="radio" name="container-type" value="PERSONAL_CONTAINER" checked> 任意容器 PERSONAL_CONTAINER
+  </label>
+  <label style="display:flex;align-items:center;gap:8px;">
+    <input type="radio" name="container-type" value="SPECIFIC_CONTAINER"> 指定容器类
+  </label>
+  <input type="text" id="container-class" placeholder="全限定类名，如 net.minecraft.world.inventory.ChestMenu" style="display:none;width:100%;margin-top:4px;">
+</div>
+<div id="perc-custom-sub" class="tb-sub">
+  <input type="text" id="custom-perc-name" placeholder="自定义感知类型名称" style="width:100%;margin-bottom:4px;">
+  <textarea id="custom-perc-pred" placeholder="谓词表达式 (entity, ctx) -> ..." style="width:100%;height:40px;"></textarea>
+</div>
+</div>
+
+<div class="tb-section">
+<h3>四、稀有度 Rarity <span class="hint">单选</span></h3>
+<div class="tb-check-group">
+<label><input type="radio" name="rarity" value="MYTHIC" onchange="livePreview()"> MYTHIC 神话</label>
+<label><input type="radio" name="rarity" value="LEGENDARY" onchange="livePreview()"> LEGENDARY 传说</label>
+<label><input type="radio" name="rarity" value="EPIC" checked onchange="livePreview()"> EPIC 史诗</label>
+<label><input type="radio" name="rarity" value="RARE" onchange="livePreview()"> RARE 精良</label>
+<label><input type="radio" name="rarity" value="COMMON" onchange="livePreview()"> COMMON 平凡</label>
+</div>
+</div>
+
+<div class="tb-section">
+<h3>五、CD 冷却</h3>
 <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-  <input type="checkbox" id="perc-container" onchange="toggleEntityOpts()"> ContainerPerception — 随影（绑定容器）
+<input type="checkbox" id="has-cd" onchange="toggleCd();livePreview();"> 启用冷却时间
 </label>
-<div id="container-opts" style="display:none;margin-left:24px;">
-  <select id="container-type" style="padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);font-size:13px;">
-    <option value="PERSONAL_CONTAINER">PERSONAL_CONTAINER — 任何容器</option>
-    <option value="SPECIFIC_CONTAINER">SPECIFIC_CONTAINER — 指定容器类</option>
-  </select>
-  <input id="container-class" type="text" placeholder="目标容器类全限定名" style="display:none;width:100%;margin-top:4px;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);font-size:13px;">
-</div>
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-  <input type="checkbox" id="perc-custom" onchange="toggleEntityOpts()"> CustomPerception — 自定义
-</label>
-<div id="custom-perc-opts" style="display:none;margin-left:24px;">
-  <input id="custom-perc-name" type="text" placeholder="自定义感知类型名" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);font-size:13px;">
-  <input id="custom-perc-pred" type="text" placeholder="BiPredicate<LivingEntity, EffectContext> 谓词表达式" style="width:100%;margin-top:4px;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);font-size:13px;">
-</div>
+<div id="cd-row" class="tb-cd-row">
+<input type="number" id="cd-ticks" value="100" min="1" style="width:100px;" disabled oninput="livePreview()">
+<span style="font-size:13px;">tick（20 tick = 1 秒）</span>
 </div>
 </div>
 
-<div>
-<label>4. 触发条件 ActivationCondition</label>
-<select id="activation" onchange="toggleCustomActivation()" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;margin-bottom:6px;">
-<option value="attack">攻击时 — ctx.target() != null</option>
-<option value="hurt">受伤时 — ctx.target() == null</option>
-<option value="always">始终 — () -> true</option>
-<option value="lowhp">低血量 — entity.getHealth() < entity.getMaxHealth() * 0.3</option>
-<option value="kill">击杀时 — 自定义</option>
-<option value="custom">自定义条件...</option>
-</select>
-<textarea id="activation-custom" placeholder="输入自定义条件表达式（lambda 体）" style="display:none;width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:13px;height:60px;resize:vertical;"></textarea>
+<div class="tb-section">
+<h3>六、触发条件 <span class="hint">自定义文本描述</span></h3>
+<textarea id="activation" placeholder="例如：当 entity 攻击目标时触发、entity 血量低于30%时触发、每 tick 持续触发..." style="width:100%;height:64px;" oninput="livePreview()"></textarea>
 </div>
 
-<div>
-<label>5. 稀有度 Rarity</label>
-<select id="rarity" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;">
-<option value="MYTHIC">MYTHIC 神话 🔴</option>
-<option value="LEGENDARY">LEGENDARY 传说 🟠</option>
-<option value="EPIC" selected>EPIC 史诗 🟣</option>
-<option value="RARE">RARE 精良 🔵</option>
-<option value="COMMON">COMMON 平凡 ⚪</option>
-</select>
+<div class="tb-section">
+<h3>七、总体需求 <span class="hint">自然语言描述天赋效果，交由 AI 实现</span></h3>
+<textarea id="requirement" placeholder="例如：攻击时使目标燃烧 5 秒，并造成目标最大生命值 10% 的真实伤害。如果目标已经燃烧，额外附加一次爆炸。" style="width:100%;height:80px;" oninput="livePreview()"></textarea>
 </div>
 
+<div class="tb-section">
+<h3>八、天赋面板详情行 <span class="hint">创造模式悬停显示的描述，支持 § 颜色代码</span></h3>
+<textarea id="detaillines" placeholder="每行一个条目，例如：§c使目标燃烧 5 秒&#10;§6目标已燃烧时追加爆炸&#10;§b伤害类型: 真实伤害" style="width:100%;height:72px;" oninput="livePreview()"></textarea>
 </div>
 
-## 执行逻辑
-
-<div style="margin-bottom:12px;">
-<label>6. execute() 方法体 <span style="color:var(--muted);font-size:12px">EffectContext context 可用</span></label>
-<div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
-<button type="button" onclick="insertSnippet('burn')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+点燃</button>
-<button type="button" onclick="insertSnippet('damage')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+伤害</button>
-<button type="button" onclick="insertSnippet('heal')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+治疗</button>
-<button type="button" onclick="insertSnippet('potion')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+药水效果</button>
-<button type="button" onclick="insertSnippet('explosion')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+爆炸</button>
-<button type="button" onclick="insertSnippet('lightning')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+雷击</button>
-<button type="button" onclick="insertSnippet('velocity')" style="padding:4px 10px;font-size:12px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:var(--text);cursor:pointer;">+击飞</button>
-</div>
-<textarea id="execbody" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-family:monospace;font-size:13px;height:120px;resize:vertical;">if (context.target() instanceof LivingEntity target) {
-    target.setSecondsOnFire(5);
-}</textarea>
+<div style="margin-top:12px;display:flex;align-items:center;gap:12px;">
+<button class="tb-btn primary" onclick="doPush()">推送</button>
+<span id="msg" class="tb-msg"></span>
 </div>
 
-<label>天赋面板详情行（可选，支持 § 颜色代码）</label>
-<textarea id="detaillines" placeholder='每行一个详情条目，如：§c使目标燃烧 5 秒' style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:13px;height:60px;resize:vertical;">§c使目标燃烧 5 秒</textarea>
-
-<div style="margin-top:16px;display:flex;gap:12px;align-items:center;">
-<button onclick="generate()" style="padding:10px 28px;background:var(--accent);color:white;border:none;border-radius:6px;font-size:15px;cursor:pointer;font-weight:600;">生成 Java 代码</button>
-<button onclick="copyCode()" id="copy-btn" style="padding:10px 20px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:14px;cursor:pointer;">复制代码</button>
-<span id="copy-msg" style="color:var(--success);font-size:13px;display:none;">已复制!</span>
+<div style="margin-top:16px;">
+<details>
+<summary style="cursor:pointer;font-size:13px;color:var(--c-muted);">预览生成的 JSON</summary>
+<pre id="preview" style="background:var(--c-card);border:1px solid var(--c-border);padding:12px;border-radius:6px;font-size:12px;max-height:300px;overflow:auto;margin-top:6px;">填写表单后自动显示</pre>
+</details>
 </div>
-
-## 生成的代码
-
-<pre id="output" style="background:var(--code-bg);color:var(--code-text);padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.5;min-height:100px;white-space:pre-wrap;word-break:break-all;">点击上方「生成 Java 代码」按钮查看结果</pre>
 
 </div>
 
 <script>
-function toggleEntityOpts() {
-  document.getElementById('item-slot-opts').style.display = document.getElementById('perc-item').checked ? 'block' : 'none';
-  var cc = document.getElementById('perc-container').checked;
-  document.getElementById('container-opts').style.display = cc ? 'block' : 'none';
-  if (cc) {
-    var ct = document.getElementById('container-type');
-    document.getElementById('container-class').style.display = ct.value === 'SPECIFIC_CONTAINER' ? 'block' : 'none';
-  }
-  document.getElementById('custom-perc-opts').style.display = document.getElementById('perc-custom').checked ? 'block' : 'none';
+function $(id) { return document.getElementById(id); }
+
+function val(id) { var e=$(id); return e ? (e.type==='checkbox'||e.type==='radio' ? (e.checked?e.value:null) : e.value) : ''; }
+
+function checkedVal(sel) {
+  var el = document.querySelector('input[name="'+sel+'"]:checked');
+  return el ? el.value : '';
 }
 
-document.getElementById('container-type').onchange = function() {
-  document.getElementById('container-class').style.display = this.value === 'SPECIFIC_CONTAINER' ? 'block' : 'none';
-};
-
-function toggleCustomActivation() {
-  document.getElementById('activation-custom').style.display =
-    document.getElementById('activation').value === 'custom' ? 'block' : 'none';
+function checkedVals(sel) {
+  return Array.from(document.querySelectorAll('.'+sel+':checked')).map(function(cb){return cb.value;});
 }
 
-function getActivation() {
-  var val = document.getElementById('activation').value;
-  if (val === 'custom') return document.getElementById('activation-custom').value || 'true /* TODO */';
-  switch(val) {
-    case 'attack': return 'ctx -> ctx.target() != null';
-    case 'hurt': return 'ctx -> ctx.target() == null';
-    case 'always': return 'ctx -> true';
-    case 'lowhp': return 'ctx -> ctx.entity().getHealth() < ctx.entity().getMaxHealth() * 0.3f';
-    case 'kill': return 'ctx -> ctx.target() != null && !ctx.target().isAlive()';
-    default: return 'ctx -> true';
-  }
-}
-
-function getPerceptions() {
-  var parts = [];
-  if (document.getElementById('perc-entity').checked) parts.push('new EntityPerception()');
-  if (document.getElementById('perc-item').checked) {
-    var slots = [];
-    var slotIds = ['mainhand','offhand','head','chest','legs','feet','inventory'];
-    var slotNames = ['MAIN_HAND','OFF_HAND','HEAD','CHEST','LEGS','FEET','INVENTORY'];
-    for (var i = 0; i < slotIds.length; i++) {
-      if (document.getElementById('slot-' + slotIds[i]).checked) slots.push('ItemPerception.ItemSlot.' + slotNames[i]);
+function getPerception() {
+  var result = [];
+  var toggles = document.querySelectorAll('.perc-toggle');
+  for (var i=0;i<toggles.length;i++) {
+    var cb = toggles[i];
+    if (!cb.checked) continue;
+    var sub = $(cb.dataset.target);
+    if (sub === $('perc-entity-sub')) result.push('EntityPerception');
+    if (sub === $('perc-item-sub')) {
+      var slots = checkedVals('item-slot');
+      result.push('ItemPerception['+(slots.length ? slots.join(',') : 'MAIN_HAND')+']');
     }
-    if (slots.length === 0) slots.push('ItemPerception.ItemSlot.MAIN_HAND');
-    parts.push('new ItemPerception(' + slots.join(', ') + ')');
-  }
-  if (document.getElementById('perc-container').checked) {
-    var ct = document.getElementById('container-type').value;
-    if (ct === 'SPECIFIC_CONTAINER') {
-      parts.push('new ContainerPerception(ContainerPerception.ContainerType.SPECIFIC_CONTAINER, ' + (document.getElementById('container-class').value || 'ChestMenu.class') + ')');
-    } else {
-      parts.push('new ContainerPerception(ContainerPerception.ContainerType.PERSONAL_CONTAINER)');
+    if (sub === $('perc-container-sub')) {
+      var ct = checkedVal('container-type');
+      if (ct === 'SPECIFIC_CONTAINER') result.push('ContainerPerception['+ct+':'+val('container-class')+']');
+      else result.push('ContainerPerception['+ct+']');
+    }
+    if (sub === $('perc-custom-sub')) {
+      result.push('CustomPerception['+(val('custom-perc-name')||'?')+']');
     }
   }
-  if (document.getElementById('perc-custom').checked) {
-    var name = document.getElementById('custom-perc-name').value || 'myCustom';
-    var pred = document.getElementById('custom-perc-pred').value || '(entity, ctx) -> true';
-    parts.push('CustomPerception.of("' + name + '", ' + pred + ')');
-  }
-  if (parts.length === 0) parts.push('new EntityPerception()');
-  return 'Set.of(' + parts.join(',\n        ') + ')';
+  return result.length ? result : ['EntityPerception'];
 }
 
-function generate() {
-  var modId = document.getElementById('modid').value.trim() || 'mymod';
-  var pkg = document.getElementById('pkg').value.trim() || 'net.minecraft.client.yiz.xian.effect';
-  var cls = document.getElementById('cls').value.trim() || 'MyEffect';
-  var effId = document.getElementById('effid').value.trim() || 'my_effect';
-  var dispName = document.getElementById('dispname').value.trim() || '我的效果';
-  var transKey = 'effect.' + modId + '.' + effId;
-  var parent = document.getElementById('parent').value;
-  var level = document.getElementById('level').value;
-  var perceptions = getPerceptions();
-  var activation = getActivation();
-  var rarity = document.getElementById('rarity').value;
-  var execBody = document.getElementById('execbody').value || '// TODO: implement';
-  var detailLines = document.getElementById('detaillines').value.trim();
-
-  var needsItemSlot = document.getElementById('perc-item').checked;
-  var needsContainer = document.getElementById('perc-container').checked;
-
-  var imports = [
-    'import net.minecraft.client.yiz.effect.AbstractEffect;',
-    'import net.minecraft.client.yiz.effect.EffectContext;',
-    'import net.minecraft.client.yiz.effect.parent.ParentType;',
-    'import net.minecraft.client.yiz.effect.rarity.Rarity;',
-    'import net.minecraft.resources.ResourceLocation;'
-  ];
-  if (document.getElementById('perc-entity').checked)
-    imports.push('import net.minecraft.client.yiz.effect.perception.EntityPerception;');
-  if (needsItemSlot)
-    imports.push('import net.minecraft.client.yiz.effect.perception.ItemPerception;');
-  if (needsContainer)
-    imports.push('import net.minecraft.client.yiz.effect.perception.ContainerPerception;');
-  if (document.getElementById('perc-custom').checked)
-    imports.push('import net.minecraft.client.yiz.effect.perception.CustomPerception;');
-
-  imports.push('import net.minecraft.world.entity.LivingEntity;');
-  imports.push('import java.util.List;');
-  imports.push('import java.util.Set;');
-
-  var hasDetail = detailLines.length > 0;
-  var detailMethod = '';
-  if (hasDetail) {
-    var lines = detailLines.split('\n').filter(function(l) { return l.trim(); });
-    detailMethod = '\n    @Override\n    public List<String> getTalentDetailLines(LivingEntity entity) {\n        return List.of(\n';
-    for (var i = 0; i < lines.length; i++) {
-      detailMethod += '            "' + lines[i].trim().replace(/"/g, '\\"') + '"';
-      detailMethod += (i < lines.length - 1) ? ',\n' : '\n';
-    }
-    detailMethod += '        );\n    }\n';
-  }
-
-  var code = 'package ' + pkg + ';\n\n'
-    + imports.join('\n') + '\n\n'
-    + '/**\n'
-    + ' * ' + dispName + ' — 自动生成于天赋构造器\n'
-    + ' * <p>\n'
-    + ' * ' + parent + ' | Lv.' + level + ' | ' + rarity + '\n'
-    + ' * </p>\n'
-    + ' */\n'
-    + 'public class ' + cls + ' extends AbstractEffect {\n\n'
-    + '    public ' + cls + '() {\n'
-    + '        super(\n'
-    + '            ResourceLocation.parse("' + modId + ':' + effId + '"),\n'
-    + '            "' + transKey + '",\n'
-    + '            "' + dispName + '",\n'
-    + '            ParentType.' + parent + ',\n'
-    + '            ' + level + ',\n'
-    + '            ' + perceptions + ',\n'
-    + '            ' + activation + ',\n'
-    + '            Rarity.' + rarity + '\n'
-    + '        );\n'
-    + '    }\n'
-    + (hasDetail ? detailMethod : '')
-    + '\n    @Override\n'
-    + '    public void execute(EffectContext context) {\n'
-    + indent(execBody, 8)
-    + '\n    }\n'
-    + '}\n';
-
-  document.getElementById('output').textContent = code;
-}
-
-function indent(text, spaces) {
-  var prefix = '';
-  for (var i = 0; i < spaces; i++) prefix += ' ';
-  return text.split('\n').map(function(l) { return l.trim() ? prefix + l : l; }).join('\n');
-}
-
-function insertSnippet(type) {
-  var ta = document.getElementById('execbody');
-  var snippets = {
-    burn: 'if (context.target() instanceof LivingEntity target) {\n    target.setSecondsOnFire(5);\n}',
-    damage: 'if (context.target() instanceof LivingEntity target) {\n    target.hurt(target.damageSources().magic(), 10.0f);\n}',
-    heal: 'context.entity().heal(5.0f);',
-    potion: 'if (context.target() instanceof LivingEntity target) {\n    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));\n}',
-    explosion: 'if (context.target() != null) {\n    context.level().explode(null, context.target().getX(), context.target().getY(), context.target().getZ(), 2.0f, Level.ExplosionInteraction.NONE);\n}',
-    lightning: 'if (context.target() != null) {\n    LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, context.level());\n    bolt.setPos(context.target().position());\n    context.level().addFreshEntity(bolt);\n}',
-    velocity: 'if (context.target() instanceof LivingEntity target) {\n    target.knockback(2.0, context.entity().getX() - target.getX(), context.entity().getZ() - target.getZ());\n}'
+function buildData() {
+  return {
+    name: val('name') || '未命名天赋',
+    modid: val('modid') || 'yizxianmod',
+    effid: val('effid') || '',
+    pkg: val('pkg') || 'net.minecraft.client.yiz.xian.effect',
+    parent: checkedVal('parent') || 'ECHO',
+    maxLevel: $('has-level').checked ? parseInt(val('max-level'))||1 : 1,
+    perception: getPerception(),
+    rarity: checkedVal('rarity') || 'EPIC',
+    cooldown: $('has-cd').checked ? parseInt(val('cd-ticks'))||0 : 0,
+    cooldownEnabled: $('has-cd').checked,
+    activation: val('activation'),
+    requirement: val('requirement'),
+    detailLines: val('detaillines'),
+    _timestamp: new Date().toISOString()
   };
-  ta.value = snippets[type] || ta.value;
-  ta.focus();
 }
 
-function copyCode() {
-  var code = document.getElementById('output').textContent;
-  if (!code || code.indexOf('点击上方') >= 0) return;
-  navigator.clipboard.writeText(code).then(function() {
-    var msg = document.getElementById('copy-msg');
-    msg.style.display = 'inline';
-    setTimeout(function() { msg.style.display = 'none'; }, 2000);
+function livePreview() {
+  $('preview').textContent = JSON.stringify(buildData(), null, 2);
+}
+
+function toggleLevel() { $('max-level').disabled = !$('has-level').checked; }
+function toggleCd() { $('cd-ticks').disabled = !$('has-cd').checked; $('cd-row').classList.toggle('show',$('has-cd').checked); }
+
+function toggleSub() {
+  var toggles = document.querySelectorAll('.perc-toggle');
+  for (var i=0;i<toggles.length;i++) {
+    var sub = $(toggles[i].dataset.target);
+    if (sub) sub.classList.toggle('show', toggles[i].checked);
+  }
+  // also check container radio
+  var cc = document.querySelector('.perc-toggle[data-target="perc-container-sub"]');
+  if (cc && cc.checked) {
+    $('container-class').style.display = checkedVal('container-type')==='SPECIFIC_CONTAINER' ? 'block' : 'none';
+  }
+}
+
+document.addEventListener('change', function(e) {
+  if (e.target.name === 'container-type') {
+    $('container-class').style.display = e.target.value === 'SPECIFIC_CONTAINER' ? 'block' : 'none';
+    livePreview();
+  }
+});
+
+function doPush() {
+  var data = buildData();
+  if (!data.name || data.name === '未命名天赋') { showMsg('请填写天赋名称','err'); return; }
+  $('msg').textContent = '推送中...';
+  fetch('http://localhost:8765/push', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    if (d.ok) showMsg('已推送: '+d.file, 'ok');
+    else showMsg('推送失败: '+(d.error||'未知错误'), 'err');
+  })
+  .catch(function(){
+    showMsg('推送失败: 请先启动 python scripts/talent_server.py','err');
   });
 }
 
-// 初始化
-toggleEntityOpts();
-toggleCustomActivation();
-generate();
+function showMsg(text, type) {
+  var m = $('msg'); m.textContent = text; m.className = 'tb-msg '+(type||'ok');
+  setTimeout(function(){ m.textContent=''; }, 5000);
+}
+
+toggleLevel(); toggleCd(); toggleSub(); livePreview();
 </script>
