@@ -1,10 +1,186 @@
 # 变更日志
 
-最后更新: 2026-05-26 00:37
+最后更新: 2026-05-26 05:10
 
 来源仓库: `D:/ZM/yizgzq/yiz1.21.1`
 
 ---
+
+### 2026-05-26 — `881f9d48`
+
+fix: freeze rotation at current angle when ready (inherit state)
+
+### 2026-05-26 — `73ec6101`
+
+feat: stop rotation when ready; use provider textures
+
+### 2026-05-26 — `0eb1c315`
+
+feat: ConeTargetProvider2 with new corner texture set (lock2_*)
+
+### 2026-05-26 — `c05e7c5a`
+
+chore: remove debug logging from EntityLockAPI, SyncLockPayload, tizMod
+
+### 2026-05-26 — `aa04253d`
+
+fix: remove red tint, always white frame; full opaque at charge=1.0
+
+### 2026-05-26 — `a5044590`
+
+fix: brighter red frame color (0.4 instead of 0.2)
+
+### 2026-05-26 — `d3149ceb`
+
+fix: add client-side debug logging for SyncLockPayload + provider
+
+### 2026-05-26 — `1cc87114`
+
+fix: add missing imports + debug logging for effect pipeline
+
+### 2026-05-26 — `f4598ce0`
+
+fix: re-add dispatchContext call in onPlayerTick
+
+### 2026-05-26 — `d0b741d4`
+
+refactor: TargetFrameProvider + TargetFrameManager architecture
+
+### 2026-05-26 — `548fc63b`
+
+feat: restore 60° cone fallback; API lock overrides with charge/ready
+
+### 2026-05-26 — `e2fc3994`
+
+feat: integrate lock frame with charge/ready state via EntityLockAPI
+
+### 2026-05-26 — `6a5e79df`
+
+fix: un-scale corner tex size; restore frame min scale to 40%
+
+### 2026-05-26 — `ddb69c71`
+
+refactor: extract lock frame parameters as API constants + methods
+
+### 2026-05-26 — `3f724456`
+
+feat: slow rotation of targeting frame (~30°/sec around forward axis)
+
+### 2026-05-26 — `3afa0839`
+
+fix: completely invisible within 3 blocks
+
+### 2026-05-26 — `43340529`
+
+fix: piecewise linear alpha — 0g=0%, 3g=18%, 6g=50%, 9g=80%, 12g=100%
+
+### 2026-05-26 — `68ae329b`
+
+fix: swap top-left/right and bottom-left/right corner textures
+
+### 2026-05-26 — `34412c4c`
+
+fix: stronger fade using quadratic alpha curve (t²)
+
+### 2026-05-26 — `b1311222`
+
+feat: near-range shrink + transparency fade for lock frame
+
+### 2026-05-26 — `13269852`
+
+fix: use event PoseStack directly for texture vertices, no RenderSystem set
+
+### 2026-05-26 — `815b0e0a`
+
+feat: replace red cubes with 4 corner textures on targeting frame
+
+### 2026-05-26 — `6af01405`
+
+fix: frame now uses player-facing local coordinate system
+
+### 2026-05-26 — `361b0f17`
+
+fix: remove Z-direction offset, frame centered at entity body center
+
+### 2026-05-26 — `7dbbfe8c`
+
+fix: body center Y at 70% height instead of 50%
+
+### 2026-05-26 — `788be826`
+
+fix: fixed-scale square frame at body center, not entity AABB matching
+
+### 2026-05-26 — `46431bd3`
+
+fix: add Z-depth half to corner positions — front face of bounding box
+
+### 2026-05-26 — `3e8e8b0e`
+
+fix: use actual bounding-box half-width & half-height for corner positions
+
+### 2026-05-26 — `aac1c15c`
+
+fix: use LevelRenderer.renderLineBox same as F3+B hitbox rendering
+
+### 2026-05-26 — `d3623410`
+
+refactor: screen-space lock frame via ScreenEvent overlay
+
+### 2026-05-26 — `9ecb800e`
+
+fix: square targeting frame centered on entity box center
+
+### 2026-05-26 — `0d5d0fe2`
+
+fix: 60° cone targeting, pick entity closest to screen center
+
+### 2026-05-26 — `ecfb3570`
+
+feat: 4 separate corner textures for lock targeting frame
+
+### 2026-05-26 — `efe1af5a`
+
+refactor: 4-corner targeting frame around entity bounding box
+
+### 2026-05-26 — `9a02586a`
+
+fix: upload poseStack to RenderSystem + fixed screen-size scale
+
+### 2026-05-26 — `30fe9634`
+
+fix: use ProjectileUtil ray trace instead of cone scan for lock icon
+
+### 2026-05-26 — `c4b71115`
+
+fix: EntityLockRenderer shows icon on nearest entity within 60° FOV
+
+### 2026-05-26 — `29c95992`
+
+feat: EntityLockAPI — 实体锁定+网络同步+客户端billboard渲染
+
+### 2026-05-26 — `14c511a8`
+
+fix: ItemInfoUI shows real effect level from NBT instead of template level
+
+### 2026-05-26 — `732eb32b`
+
+fix: remove per-tick effect dispatch — effects recalculated on level change
+
+### 2026-05-26 — `7ade2296`
+
+fix: dispatchContext in player tick + unlock check bypass for ItemPerception
+
+### 2026-05-26 — `d5df6683`
+
+fix: all NBT items go to talent tab with custom name + lore
+
+### 2026-05-26 — `c8f81b61`
+
+feat: CreativeTabAutoRegistry auto-generates NBT items per effect
+
+### 2026-05-26 — `07411330`
+
+feat: EffectNBTHandler — add setEffectLevel/getEffectLevel for item level management
 
 ### 2026-05-26 — `28b11300`
 
@@ -29,171 +205,3 @@ fix: add neo_version_range to replaceProperties for template expansion
 ### 2026-05-24 — `3c8ad7e2`
 
 fix: 8 P1 code quality issues
-
-### 2026-05-24 — `8dec58a5`
-
-fix: P0 bugs across damage/effect/mixin modules
-
-### 2026-05-24 — `80155a29`
-
-relax Neo version range to [21.1,22.0) — accept entire 21.x series
-
-### 2026-05-24 — `95b7d145`
-
-relax Neo version range to [21.1.227,21.2) in mods.toml
-
-### 2026-05-24 — `d1f60ca1`
-
-add cosmic3 and cosmic4 shader pipeline files
-
-### 2026-05-24 — `9ad47680`
-
-normalize line endings
-
-### 2026-05-24 — `0f957f11`
-
-fix: shader rendering + flight API + NeoForge version rollback
-
-### 2026-05-23 — `4539319d`
-
-fix: star armor rendering — split z/non-z pipeline, fix depth write & alpha
-
-### 2026-05-22 — `e2497663`
-
-fix: flight speed 1.2x + instant stop on key release
-
-### 2026-05-22 — `4a9eee03`
-
-feat: cosmic2 shader preset — star flares + HSV nebula
-
-### 2026-05-22 — `c19c3926`
-
-feat: ShaderManager — central shader preset registry with runtime switching
-
-### 2026-05-22 — `ee7ed09c`
-
-fix: shader compilation — GLSL simplification, armor null-guard, uniform naming
-
-### 2026-05-22 — `6d08c6f6`
-
-feat: shader rendering system — star film overlay via core shaders
-
-### 2026-05-22 — `384481b7`
-
-docs: add architecture blueprint ref + current focus area to CLAUDE.md
-
-### 2026-05-22 — `6c5df5e9`
-
-docs: add AI quick entry for YIZwikl docs site
-
-### 2026-05-22 — `750e14b0`
-
-更新 CLAUDE.md：补充注册表 API 文档（10 个 Registry + PlayerDataAPI）
-
-### 2026-05-21 — `04ef23c8`
-
-修复 GeckoLib 冲突 + 天赋面板 UI 联动 + 数据持久化与同步
-
-### 2026-05-19 — `45b69061`
-
-清理旧 GUI 资源 + 移除旧武器/天赋类 + 新增架构审查文档 + 新增 network 网络同步包
-
-### 2026-05-16 — `862a8501`
-
-新增 Unsafe 实例级保护系统 + 整理 CLAUDE.md
-
-### 2026-05-16 — `59095715`
-
-更新 CLAUDE.md：新增攻击目标锁定 + 物品属性系统章节
-
-### 2026-05-16 — `a32235d9`
-
-新增攻击目标锁定 + 物品属性系统 + 简易指令注册 + %伤害增幅/减免 Mixin
-
-### 2026-05-16 — `4d28d1be`
-
-清理残余功能 + 新增物品属性系统 + 简易指令注册 + %伤害增幅/减免 Mixin 集成
-
-### 2026-05-16 — `5fd1e873`
-
-Implement High-Level Smithing GUI with texture block compositing
-
-### 2026-05-16 — `db0f0de9`
-
-Refactor container data persistence into formal namespaced API
-
-### 2026-05-16 — `cf45c3b4`
-
-Restructure GUI system: refactor container classes and UI config
-
-### 2026-05-15 — `f1650673`
-
-Refactor test chest into dynamic container system with texture atlas planning
-
-### 2026-05-14 — `d78738a4`
-
-Add GUI texture block system: interactive test container with slot click fix
-
-### 2026-05-14 — `cc287178`
-
-Add distribution package task and API doc with integration guide
-
-### 2026-05-14 — `bab72e75`
-
-Add special damage API (true/armor-piercing/pierce-invulnerability) and CoreMod heal ban fallback
-
-### 2026-05-14 — `15bb7e80`
-
-Fix heal ban tick enforcement to use itemsById reflection for Titan Float channel coverage
-
-### 2026-05-14 — `988fa052`
-
-Implement ASM-level heal ban and tick enforcement for Titan compatibility
-
-### 2026-05-14 — `36b7ac91`
-
-Add public API: attribute-binding damage system and direct health modification
-
-### 2026-05-14 — `9ddd6e7a`
-
-Add universal health channel scanner and public API
-
-### 2026-05-11 — `70b87719`
-
-Fix ASM Agent loading and implement Reimu attribute-to-health pipeline
-
-### 2026-05-11 — `3ca13fc1`
-
-Implement health modification system with three-layer architecture
-
-### 2026-05-11 — `43b501ec`
-
-Purge test code and debug messages
-
-### 2026-05-11 — `d9574827`
-
-Refactor talent UI panel into resizable, draggable window
-
-### 2026-05-11 — `d39c9724`
-
-Fix AttackContext tag detection and attribute modifier scheduling
-
-### 2026-05-11 — `1623e562`
-
-Fix item perception to check NBT binding, unify UI tooltip styling
-
-### 2026-05-11 — `843a9ae3`
-
-Fix mixin: hurt() callback needs CallbackInfoReturnable<Boolean>
-
-### 2026-05-11 — `aa471eec`
-
-Add test effects and fix library design issues
-
-### 2026-05-11 — `7e6bc21c`
-
-Initial commit: YizMod QZK Library Framework
-
-### 2026-05-11 — `a068f346`
-
-Initial commit

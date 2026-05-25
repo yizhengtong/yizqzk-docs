@@ -10,6 +10,26 @@
 | `enableFor(LivingEntity entity)` | `void` | - |
 | `enforceFloors(LivingEntity entity)` | `void` | - |
 
+## ConeTargetProvider
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `ConeTargetProvider(5)` | `new` | - |
+| `getTarget(Player player)` | `Entity` | - |
+| `getCharge()` | `float` | - |
+| `isReady()` | `boolean` | - |
+| `getPriority()` | `int` | - |
+
+## ConeTargetProvider2
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `ConeTargetProvider2(int priority)` | `public` | - |
+| `getTarget(Player player)` | `Entity` | - |
+| `getCharge()` | `float` | - |
+| `isReady()` | `boolean` | - |
+| `getPriority()` | `int` | - |
+
 ## ContainerDataStorage
 
 | 方法 | 返回 | 说明 |
@@ -116,6 +136,20 @@
 | `setSyncCallback(BiConsumer<ServerPlayer, List<DaoPalace>> callback)` | `void` | - |
 | `syncToClient(ServerPlayer player)` | `void` | 向客户端同步所有道宫数据。 |
 | `DaoPalace(id, pos, len, new HashSet<>(blocks)` | `new` | - |
+
+## EntityLockAPI
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / pu |
+| `unlock(Player player)` | `void` | - |
+| `getLockedTargetUuid(Player player)` | `UUID` | - |
+| `hasLock(Player player)` | `boolean` | - |
+| `ClientLockEntry(UUID targetUuid, float charge, boolean ready)` | `record` | - |
+| `putClient(UUID playerUuid, UUID targetUuid, float charge, boolean read...)` | `void` | - |
+| `ClientLockEntry(targetUuid, charge, ready)` | `new` | - |
+| `getClient()` | `ClientLockEntry` | - |
+| `clearAll()` | `void` | - |
 
 ## FlightAbilityRegistry
 
@@ -353,6 +387,21 @@
 | `ShaderInstance(event.getResourceProvider()` | `new` | - |
 | `ShaderInstance(event.getResourceProvider()` | `new` | - |
 | `TextureStateShard(TextureAtlas.LOCATION_BLOCKS, false, false)` | `new` | - |
+
+## TargetFrameManager
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / public final class Target |
+
+## TargetFrameProvider
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `getTarget(Player player)` | `Entity` | - |
+| `getCharge()` | `float` | - |
+| `isReady()` | `boolean` | - |
+| `getPriority()` | `int` | - |
 
 ## UndyingRegistry
 

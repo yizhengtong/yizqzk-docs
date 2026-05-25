@@ -61,6 +61,14 @@
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `enableFor(LivingEntity entity)` | `void` | - |\n| `enforceFloors(LivingEntity entity)` | `void` | - |"
     },
     {
+      "title": "ConeTargetProvider",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `ConeTargetProvider(5)` | `new` | - |\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
+    },
+    {
+      "title": "ConeTargetProvider2",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `ConeTargetProvider2(int priority)` | `public` | - |\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
+    },
+    {
       "title": "ContainerDataStorage",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getInstance()` | `ContainerDataStorage` | 容器数据持久化接口 — 将任意 {@link Container} 绑定到世界存档自动存读。 <p>其他模组可通过 {@ |\n| `register(String namespace, String key, Container container)` | `AutoCloseable` | 注册一个容器到世界存档自动持久化系统。 |\n| `unregister(ResourceLocation id)` | `void` | 注销一个已注册的容器，停止自动存档。 |\n| `has(String namespace, String key)` | `boolean` | 判断某个容器是否已注册。 |\n| `get(String namespace, String key)` | `Container` | 获取已注册的容器实例。 |\n| `saveAll()` | `void` | 立即强制保存所有已注册容器的当前状态"
     },
@@ -91,6 +99,10 @@
     {
       "title": "DaoPalaceAPI",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `initDataKey()` | `void` | 道宫 API — 落点管理、方块放置、范围计算、属性增益。 <p> 前置库提供框架，下游模组（yizxian）负责落点激 |\n| `activateAnchor(ServerPlayer player, ResourceLocation anchorId,\n            ...)` | `DaoPalace` | 激活一个新落点（建造一座新道宫）。 |\n| `DaoPalace(anchorId, centerPos, 1, Collections.emptySet()` | `new` | - |\n| `getPalaces(Player player)` | `List<DaoPalace>` | 获取玩家的所有道宫。 |\n| `getPalace(Player player, ResourceLocation anchorId)` | `DaoPalace` | 获取玩家指定落点的道宫，不存在返回 null。 |\n| `getPala"
+    },
+    {
+      "title": "EntityLockAPI",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / pu |\n| `unlock(Player player)` | `void` | - |\n| `getLockedTargetUuid(Player player)` | `UUID` | - |\n| `hasLock(Player player)` | `boolean` | - |\n| `ClientLockEntry(UUID targetUuid, float charge, boolean ready)` | `record` | - |\n| `putClient(UUID playerUuid, UUID targetUuid, float charge, boolean read...)` | `void` | - |\n|"
     },
     {
       "title": "FlightAbilityRegistry",
@@ -167,6 +179,14 @@
     {
       "title": "StarShaderRegistry",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStarItem(Predicate<ItemStack> predicate)` | `void` | 星空着色器注册表 — 着色器渲染对接 API（A层→B层桥梁） <p>前置库提供星空着色器渲染能力，下游模组通过此 AP |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |\n| `registerStarArmor(Predicate<ItemStack> predicate)` | `void` | 注册一个盔甲谓词：匹配的盔甲在实体上渲染时叠加星空效果。 |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |"
+    },
+    {
+      "title": "TargetFrameManager",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / public final class Target |"
+    },
+    {
+      "title": "TargetFrameProvider",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
     },
     {
       "title": "UndyingRegistry",
@@ -253,6 +273,46 @@
       "content": "**决策**: `PlayerDataAPI.set()` 自动触发 S2C 同步包\n\n**理由**: 下游模组使用 `PlayerDataAPI.set()` 修改数据时，服务端玩家数据变更但客户端玩家不可见。通过 `SyncPlayerDataPayload` 自动推送到客户端，保证天赋面板等 UI 实时刷新。"
     },
     {
+      "title": "时间线",
+      "content": "2026-05-26 02:07~04:14, 约 2 小时"
+    },
+    {
+      "title": "需求",
+      "content": "EntityPerception 天赋, 视线锁定 8 格目标 2.5 秒充能 → 攻击触发突进 + 2 倍真伤 + 等比例改血。"
+    },
+    {
+      "title": "遇到的失败 (5 个)",
+      "content": ""
+    },
+    {
+      "title": "1. dispatchContext 缺席",
+      "content": "**现象**: 效果不触发, 充能不开始\n\n**根因**: `tizMod.onPlayerTick()` 里 `EffectEventBus.dispatchContext()` 丢了, `AbstractEffect.execute()` 永远不会被调度\n\n**解决**: 补回 `dispatchContext` 调用"
+    },
+    {
+      "title": "2. EntityPerception 解锁检查拦截",
+      "content": "**现象**: dispatch 跑了但 execute() 还是被跳过\n\n**根因**: dispatch 管道第 2 步 `isUnlocked()` 对所有效果都检查, 包括 ItemPerception。修复成只对 EntityPerception 检查"
+    },
+    {
+      "title": "3. getPlayerByUUID 只找玩家",
+      "content": "**现象**: `isReady=true timer=50` 但触发消息不出来\n\n**根因**: `player.level().getPlayerByUUID()` 只查在线玩家。假人/怪物是 `LivingEntity` 非 `Player`, 永远返回 null\n\n**解决**: 改用 `((ServerLevel)level).getEntity(UUID)` 查所有实体"
+    },
+    {
+      "title": "4. 充能计时器同帧双加",
+      "content": "**现象**: 充能不到 2.5 秒就满了\n\n**根因**: `TargetFrameManager.getBest()` 和 `EntityLockRenderer` 各自调一次 `provider.getTarget()`, 每帧 timer +2\n\n**解决**: 用 `level.getGameTime()` 检测同帧重复调用, 跳过第二次"
+    },
+    {
+      "title": "5. setNewDamage 走护甲减免",
+      "content": "**现象**: 2 倍伤害打不动高护甲/抗性提升\n\n**根因**: `LivingDamageEvent.Pre.setNewDamage()` 修改的值依然经过护甲/附魔管线\n\n**解决**: `event.setNewDamage(0)` 取消原伤害 → 全部改用 `YizModQZKAPI.trueDamage()` 真实伤害 + `EntityASMUtil.modifyHealth()` 直改血绕过护甲"
+    },
+    {
+      "title": "架构经验",
+      "content": "- **服务端充能** (execute + PlayerDataAPI) 和 **客户端渲染** (Provider + Manager) 是两条独立管线, 必须分别验证\n- 实体查找: 用 `ServerLevel.getEntity(UUID)` 而非 `getPlayerByUUID`\n- 伤害: `setNewDamage` 不绕护甲, 真伤害用 `YizModQZKAPI.trueDamage()`, 改血用 `EntityASMUtil.modifyHealth()`\n- Provider 的 `getTarget()` 可能被多次调用, 内部状态变更需要用帧计数去重"
+    },
+    {
+      "title": "最终架构",
+      "content": "```\n服务端:\n  玩家攻击 → LivingDamageEvent.Pre\n    → isReady?(PlayerDataAPI timer >= 50) → trueDamage + modifyHealth\n  每 tick → dispatchContext → CriticalStrikeEffect.execute()\n    → findTarget(8格LOS) → timer++ → EntityLockAPI\n\n客户端:\n  每帧 → TargetFrameManager.getBest()\n    → CriticalStrikeProvider(prio=10) → 60°锥 + 本地计时\n    → EntityLockRenderer 渲染锁定框\n```"
+    },
+    {
       "title": "问题描述",
       "content": "游戏启动时 GeckoLib 报错：\n\n```\nMixin prepare for mod geckolib failed:\nMixinTargetAlreadyLoadedException:\n  geckolib.mixins.json:common.LivingEntityMixin\n  target net.minecraft.world.entity.LivingEntity was loaded too early.\n```\n\n游戏在启动阶段崩溃，无法进入主菜单。错误出现在 Mixin 框架的预处理阶段——GeckoLib 的 `LivingEntityMixin` 要求目标类在 Mixin 应用时尚未被加载，但此时 `LivingEntity` 已经被提前加载了。"
     },
@@ -337,6 +397,182 @@
   ],
   "changelog": [
     {
+      "title": "2026-05-26 — `881f9d48`",
+      "content": "fix: freeze rotation at current angle when ready (inherit state)"
+    },
+    {
+      "title": "2026-05-26 — `73ec6101`",
+      "content": "feat: stop rotation when ready; use provider textures"
+    },
+    {
+      "title": "2026-05-26 — `0eb1c315`",
+      "content": "feat: ConeTargetProvider2 with new corner texture set (lock2_*)"
+    },
+    {
+      "title": "2026-05-26 — `c05e7c5a`",
+      "content": "chore: remove debug logging from EntityLockAPI, SyncLockPayload, tizMod"
+    },
+    {
+      "title": "2026-05-26 — `aa04253d`",
+      "content": "fix: remove red tint, always white frame; full opaque at charge=1.0"
+    },
+    {
+      "title": "2026-05-26 — `a5044590`",
+      "content": "fix: brighter red frame color (0.4 instead of 0.2)"
+    },
+    {
+      "title": "2026-05-26 — `d3149ceb`",
+      "content": "fix: add client-side debug logging for SyncLockPayload + provider"
+    },
+    {
+      "title": "2026-05-26 — `1cc87114`",
+      "content": "fix: add missing imports + debug logging for effect pipeline"
+    },
+    {
+      "title": "2026-05-26 — `f4598ce0`",
+      "content": "fix: re-add dispatchContext call in onPlayerTick"
+    },
+    {
+      "title": "2026-05-26 — `d0b741d4`",
+      "content": "refactor: TargetFrameProvider + TargetFrameManager architecture"
+    },
+    {
+      "title": "2026-05-26 — `548fc63b`",
+      "content": "feat: restore 60° cone fallback; API lock overrides with charge/ready"
+    },
+    {
+      "title": "2026-05-26 — `e2fc3994`",
+      "content": "feat: integrate lock frame with charge/ready state via EntityLockAPI"
+    },
+    {
+      "title": "2026-05-26 — `6a5e79df`",
+      "content": "fix: un-scale corner tex size; restore frame min scale to 40%"
+    },
+    {
+      "title": "2026-05-26 — `ddb69c71`",
+      "content": "refactor: extract lock frame parameters as API constants + methods"
+    },
+    {
+      "title": "2026-05-26 — `3f724456`",
+      "content": "feat: slow rotation of targeting frame (~30°/sec around forward axis)"
+    },
+    {
+      "title": "2026-05-26 — `3afa0839`",
+      "content": "fix: completely invisible within 3 blocks"
+    },
+    {
+      "title": "2026-05-26 — `43340529`",
+      "content": "fix: piecewise linear alpha — 0g=0%, 3g=18%, 6g=50%, 9g=80%, 12g=100%"
+    },
+    {
+      "title": "2026-05-26 — `68ae329b`",
+      "content": "fix: swap top-left/right and bottom-left/right corner textures"
+    },
+    {
+      "title": "2026-05-26 — `34412c4c`",
+      "content": "fix: stronger fade using quadratic alpha curve (t²)"
+    },
+    {
+      "title": "2026-05-26 — `b1311222`",
+      "content": "feat: near-range shrink + transparency fade for lock frame"
+    },
+    {
+      "title": "2026-05-26 — `13269852`",
+      "content": "fix: use event PoseStack directly for texture vertices, no RenderSystem set"
+    },
+    {
+      "title": "2026-05-26 — `815b0e0a`",
+      "content": "feat: replace red cubes with 4 corner textures on targeting frame"
+    },
+    {
+      "title": "2026-05-26 — `6af01405`",
+      "content": "fix: frame now uses player-facing local coordinate system"
+    },
+    {
+      "title": "2026-05-26 — `361b0f17`",
+      "content": "fix: remove Z-direction offset, frame centered at entity body center"
+    },
+    {
+      "title": "2026-05-26 — `7dbbfe8c`",
+      "content": "fix: body center Y at 70% height instead of 50%"
+    },
+    {
+      "title": "2026-05-26 — `788be826`",
+      "content": "fix: fixed-scale square frame at body center, not entity AABB matching"
+    },
+    {
+      "title": "2026-05-26 — `46431bd3`",
+      "content": "fix: add Z-depth half to corner positions — front face of bounding box"
+    },
+    {
+      "title": "2026-05-26 — `3e8e8b0e`",
+      "content": "fix: use actual bounding-box half-width & half-height for corner positions"
+    },
+    {
+      "title": "2026-05-26 — `aac1c15c`",
+      "content": "fix: use LevelRenderer.renderLineBox same as F3+B hitbox rendering"
+    },
+    {
+      "title": "2026-05-26 — `d3623410`",
+      "content": "refactor: screen-space lock frame via ScreenEvent overlay"
+    },
+    {
+      "title": "2026-05-26 — `9ecb800e`",
+      "content": "fix: square targeting frame centered on entity box center"
+    },
+    {
+      "title": "2026-05-26 — `0d5d0fe2`",
+      "content": "fix: 60° cone targeting, pick entity closest to screen center"
+    },
+    {
+      "title": "2026-05-26 — `ecfb3570`",
+      "content": "feat: 4 separate corner textures for lock targeting frame"
+    },
+    {
+      "title": "2026-05-26 — `efe1af5a`",
+      "content": "refactor: 4-corner targeting frame around entity bounding box"
+    },
+    {
+      "title": "2026-05-26 — `9a02586a`",
+      "content": "fix: upload poseStack to RenderSystem + fixed screen-size scale"
+    },
+    {
+      "title": "2026-05-26 — `30fe9634`",
+      "content": "fix: use ProjectileUtil ray trace instead of cone scan for lock icon"
+    },
+    {
+      "title": "2026-05-26 — `c4b71115`",
+      "content": "fix: EntityLockRenderer shows icon on nearest entity within 60° FOV"
+    },
+    {
+      "title": "2026-05-26 — `29c95992`",
+      "content": "feat: EntityLockAPI — 实体锁定+网络同步+客户端billboard渲染"
+    },
+    {
+      "title": "2026-05-26 — `14c511a8`",
+      "content": "fix: ItemInfoUI shows real effect level from NBT instead of template level"
+    },
+    {
+      "title": "2026-05-26 — `732eb32b`",
+      "content": "fix: remove per-tick effect dispatch — effects recalculated on level change"
+    },
+    {
+      "title": "2026-05-26 — `7ade2296`",
+      "content": "fix: dispatchContext in player tick + unlock check bypass for ItemPerception"
+    },
+    {
+      "title": "2026-05-26 — `d5df6683`",
+      "content": "fix: all NBT items go to talent tab with custom name + lore"
+    },
+    {
+      "title": "2026-05-26 — `c8f81b61`",
+      "content": "feat: CreativeTabAutoRegistry auto-generates NBT items per effect"
+    },
+    {
+      "title": "2026-05-26 — `07411330`",
+      "content": "feat: EffectNBTHandler — add setEffectLevel/getEffectLevel for item level management"
+    },
+    {
       "title": "2026-05-26 — `28b11300`",
       "content": "feat: creative tab auto-registry — 4母页系统 + 4接口API"
     },
@@ -359,174 +595,6 @@
     {
       "title": "2026-05-24 — `3c8ad7e2`",
       "content": "fix: 8 P1 code quality issues"
-    },
-    {
-      "title": "2026-05-24 — `8dec58a5`",
-      "content": "fix: P0 bugs across damage/effect/mixin modules"
-    },
-    {
-      "title": "2026-05-24 — `80155a29`",
-      "content": "relax Neo version range to [21.1,22.0) — accept entire 21.x series"
-    },
-    {
-      "title": "2026-05-24 — `95b7d145`",
-      "content": "relax Neo version range to [21.1.227,21.2) in mods.toml"
-    },
-    {
-      "title": "2026-05-24 — `d1f60ca1`",
-      "content": "add cosmic3 and cosmic4 shader pipeline files"
-    },
-    {
-      "title": "2026-05-24 — `9ad47680`",
-      "content": "normalize line endings"
-    },
-    {
-      "title": "2026-05-24 — `0f957f11`",
-      "content": "fix: shader rendering + flight API + NeoForge version rollback"
-    },
-    {
-      "title": "2026-05-23 — `4539319d`",
-      "content": "fix: star armor rendering — split z/non-z pipeline, fix depth write & alpha"
-    },
-    {
-      "title": "2026-05-22 — `e2497663`",
-      "content": "fix: flight speed 1.2x + instant stop on key release"
-    },
-    {
-      "title": "2026-05-22 — `4a9eee03`",
-      "content": "feat: cosmic2 shader preset — star flares + HSV nebula"
-    },
-    {
-      "title": "2026-05-22 — `c19c3926`",
-      "content": "feat: ShaderManager — central shader preset registry with runtime switching"
-    },
-    {
-      "title": "2026-05-22 — `ee7ed09c`",
-      "content": "fix: shader compilation — GLSL simplification, armor null-guard, uniform naming"
-    },
-    {
-      "title": "2026-05-22 — `6d08c6f6`",
-      "content": "feat: shader rendering system — star film overlay via core shaders"
-    },
-    {
-      "title": "2026-05-22 — `384481b7`",
-      "content": "docs: add architecture blueprint ref + current focus area to CLAUDE.md"
-    },
-    {
-      "title": "2026-05-22 — `6c5df5e9`",
-      "content": "docs: add AI quick entry for YIZwikl docs site"
-    },
-    {
-      "title": "2026-05-22 — `750e14b0`",
-      "content": "更新 CLAUDE.md：补充注册表 API 文档（10 个 Registry + PlayerDataAPI）"
-    },
-    {
-      "title": "2026-05-21 — `04ef23c8`",
-      "content": "修复 GeckoLib 冲突 + 天赋面板 UI 联动 + 数据持久化与同步"
-    },
-    {
-      "title": "2026-05-19 — `45b69061`",
-      "content": "清理旧 GUI 资源 + 移除旧武器/天赋类 + 新增架构审查文档 + 新增 network 网络同步包"
-    },
-    {
-      "title": "2026-05-16 — `862a8501`",
-      "content": "新增 Unsafe 实例级保护系统 + 整理 CLAUDE.md"
-    },
-    {
-      "title": "2026-05-16 — `59095715`",
-      "content": "更新 CLAUDE.md：新增攻击目标锁定 + 物品属性系统章节"
-    },
-    {
-      "title": "2026-05-16 — `a32235d9`",
-      "content": "新增攻击目标锁定 + 物品属性系统 + 简易指令注册 + %伤害增幅/减免 Mixin"
-    },
-    {
-      "title": "2026-05-16 — `4d28d1be`",
-      "content": "清理残余功能 + 新增物品属性系统 + 简易指令注册 + %伤害增幅/减免 Mixin 集成"
-    },
-    {
-      "title": "2026-05-16 — `5fd1e873`",
-      "content": "Implement High-Level Smithing GUI with texture block compositing"
-    },
-    {
-      "title": "2026-05-16 — `db0f0de9`",
-      "content": "Refactor container data persistence into formal namespaced API"
-    },
-    {
-      "title": "2026-05-16 — `cf45c3b4`",
-      "content": "Restructure GUI system: refactor container classes and UI config"
-    },
-    {
-      "title": "2026-05-15 — `f1650673`",
-      "content": "Refactor test chest into dynamic container system with texture atlas planning"
-    },
-    {
-      "title": "2026-05-14 — `d78738a4`",
-      "content": "Add GUI texture block system: interactive test container with slot click fix"
-    },
-    {
-      "title": "2026-05-14 — `cc287178`",
-      "content": "Add distribution package task and API doc with integration guide"
-    },
-    {
-      "title": "2026-05-14 — `bab72e75`",
-      "content": "Add special damage API (true/armor-piercing/pierce-invulnerability) and CoreMod heal ban fallback"
-    },
-    {
-      "title": "2026-05-14 — `15bb7e80`",
-      "content": "Fix heal ban tick enforcement to use itemsById reflection for Titan Float channel coverage"
-    },
-    {
-      "title": "2026-05-14 — `988fa052`",
-      "content": "Implement ASM-level heal ban and tick enforcement for Titan compatibility"
-    },
-    {
-      "title": "2026-05-14 — `36b7ac91`",
-      "content": "Add public API: attribute-binding damage system and direct health modification"
-    },
-    {
-      "title": "2026-05-14 — `9ddd6e7a`",
-      "content": "Add universal health channel scanner and public API"
-    },
-    {
-      "title": "2026-05-11 — `70b87719`",
-      "content": "Fix ASM Agent loading and implement Reimu attribute-to-health pipeline"
-    },
-    {
-      "title": "2026-05-11 — `3ca13fc1`",
-      "content": "Implement health modification system with three-layer architecture"
-    },
-    {
-      "title": "2026-05-11 — `43b501ec`",
-      "content": "Purge test code and debug messages"
-    },
-    {
-      "title": "2026-05-11 — `d9574827`",
-      "content": "Refactor talent UI panel into resizable, draggable window"
-    },
-    {
-      "title": "2026-05-11 — `d39c9724`",
-      "content": "Fix AttackContext tag detection and attribute modifier scheduling"
-    },
-    {
-      "title": "2026-05-11 — `1623e562`",
-      "content": "Fix item perception to check NBT binding, unify UI tooltip styling"
-    },
-    {
-      "title": "2026-05-11 — `843a9ae3`",
-      "content": "Fix mixin: hurt() callback needs CallbackInfoReturnable<Boolean>"
-    },
-    {
-      "title": "2026-05-11 — `aa471eec`",
-      "content": "Add test effects and fix library design issues"
-    },
-    {
-      "title": "2026-05-11 — `7e6bc21c`",
-      "content": "Initial commit: YizMod QZK Library Framework"
-    },
-    {
-      "title": "2026-05-11 — `a068f346`",
-      "content": "Initial commit"
     }
   ]
 }
