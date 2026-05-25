@@ -321,6 +321,10 @@
   ],
   "changelog": [
     {
+      "title": "2026-05-25 — `e7276a4e`",
+      "content": "feat: DaoPalace & RealmProgression API — 道宫建筑系统 + 境界跨度框架"
+    },
+    {
       "title": "2026-05-24 — `41b02dbe`",
       "content": "chore: add build_dead/ to .gitignore; remove build_dead from tracking"
     },
