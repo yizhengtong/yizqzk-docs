@@ -143,6 +143,30 @@
 | `getPercentTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册百分比禁疗属性的总值（已乘缩放系数）。 |
 | `getFixedTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册固定值禁疗属性的总值（已乘缩放系数）。 |
 
+## IGeneralItem
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `getTabIcon()` | `Item` | - |
+
+## ISkillItem
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `getTabIcon()` | `Item` | - |
+
+## ITalentItem
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `getTabIcon()` | `Item` | - |
+
+## IWeaponItem
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `getTabIcon()` | `Item` | - |
+
 ## KnockbackImmunityRegistry
 
 | 方法 | 返回 | 说明 |
@@ -408,5 +432,8 @@
 | `enableProtection(net.minecraft.world.entity.player.Player player)` | `boolean` | 启用玩家保护态（Unsafe class 指针替换）。 保护态下玩家免疫一切伤害，生命值恒 ≥ 0.5。 |
 | `disableProtection(net.minecraft.world.entity.player.Player player)` | `boolean` | 关闭玩家保护态，恢复原始类。 |
 | `isProtected(net.minecraft.world.entity.player.Player player)` | `boolean` | 查询玩家是否处于保护态。 |
+| `getCreativeTabCategory(Item item)` | `String` | 获取物品所属的创造标签页类别。 <p> 根据物品实现的接口返回对应类别 key： {@code talent} / {@ |
+| `isCreativeTabRegistered(Item item)` | `boolean` | 检查物品是否实现了任意创造标签页接口（归入任一母页类别）。 |
+| `getCreativeTabCategory(item)` | `return` | - |
 | `attachEffectToItem(ItemStack stack, AbstractEffect effect)` | `void` | 直接为物品附加效果（写入 NBT）。 |
 | `getItemEffects(ItemStack stack)` | `List<AbstractEffect>` | 获取物品上的所有效果。 |

@@ -105,6 +105,22 @@
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPercent(Holder<Attribute> holder, float scale)` | `void` | 禁疗属性注册表 <p> 注册的属性将自动作为禁疗源。攻击者每次近战攻击时， 自动计算所有已注册属性的总和，为目标施加禁疗 |\n| `registerFixed(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为固定值禁疗属性。 <p> 攻击者每拥有 1 点该属性，目标每次治疗被削减 {@code scale} 点。 |\n| `getPercentTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册百分比禁疗属性的总值（已乘缩放系数）。 |\n| `getFixedTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册固定值禁疗属性的总值（已乘缩放系数）。 |"
     },
     {
+      "title": "IGeneralItem",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+    },
+    {
+      "title": "ISkillItem",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+    },
+    {
+      "title": "ITalentItem",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+    },
+    {
+      "title": "IWeaponItem",
+      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+    },
+    {
       "title": "KnockbackImmunityRegistry",
       "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
     },
@@ -320,6 +336,10 @@
     }
   ],
   "changelog": [
+    {
+      "title": "2026-05-26 — `28b11300`",
+      "content": "feat: creative tab auto-registry — 4母页系统 + 4接口API"
+    },
     {
       "title": "2026-05-25 — `e7276a4e`",
       "content": "feat: DaoPalace & RealmProgression API — 道宫建筑系统 + 境界跨度框架"
