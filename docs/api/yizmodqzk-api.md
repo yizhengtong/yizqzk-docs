@@ -5,12 +5,16 @@
 
 ## AttributeBalanceRegistry
 
+> 大白话: 属性平衡方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `enableFor(LivingEntity entity)` | `void` | - |
 | `enforceFloors(LivingEntity entity)` | `void` | - |
 
 ## ConeTargetProvider
+
+> 大白话: 母模板1方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -22,6 +26,8 @@
 
 ## ConeTargetProvider2
 
+> 大白话: 母模板2方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `ConeTargetProvider2(int priority)` | `public` | - |
@@ -31,6 +37,8 @@
 | `getPriority()` | `int` | - |
 
 ## ContainerDataStorage
+
+> 大白话: 容器存档方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -45,6 +53,8 @@
 
 ## CounterAttackRegistry
 
+> 大白话: 回击方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `getMultiplier(Player player, LivingEntity source)` | `float` | 回击注册表 <p> 在下游模组注册条件判断，前置模组在受击时触发回击。 通过临时修饰玩家 ATTACK_DAMAGE 实 |
@@ -55,6 +65,8 @@
 
 ## DamageAttributeRegistry
 
+> 大白话: 改血方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `register(Holder<Attribute> holder)` | `void` | 伤害属性注册表 <p> 注册的属性将作为额外伤害源。攻击者每次近战攻击时， 自动计算所有已注册属性的加权总和，通过 {@ |
@@ -62,6 +74,8 @@
 | `getTotalValue(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册伤害属性的加权总值。 |
 
 ## DamageEvent
+
+> 大白话: 伤害事件方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -76,6 +90,8 @@
 
 ## DamageReductionRegistry
 
+> 大白话: 减伤方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `markReductionApplied()` | `void` | 伤害减免注册表（Agent 级写前钩子） <p> 由 ASM Agent 在 {@code LivingEntity.s |
@@ -86,6 +102,8 @@
 | `if(newHealth <= 0)` | `不拦截` | - |
 
 ## DamageResult
+
+> 大白话: 伤害结果方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -99,6 +117,8 @@
 | `DamageResult(0, 0, true, reason)` | `new` | - |
 
 ## DaoPalace
+
+> 大白话: 道宫方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -114,6 +134,8 @@
 | `DaoPalace(anchorId, centerPos, sideLength, placedBlocks, newTotal)` | `new` | - |
 
 ## DaoPalaceAPI
+
+> 大白话: 道宫API方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -136,6 +158,8 @@
 
 ## EntityLockAPI
 
+> 大白话: 锁定方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / // |
@@ -150,6 +174,8 @@
 
 ## FlightAbilityRegistry
 
+> 大白话: 飞行的力方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `mayFly()` | `强制` | - |
@@ -159,6 +185,8 @@
 
 ## FlightOptimizationRegistry
 
+> 大白话: 飞行优化方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `shouldOptimize(LivingEntity entity)` | `boolean` | - |
@@ -166,6 +194,8 @@
 | `shouldOptimize(LivingEntity entity)` | `boolean` | - |
 
 ## HealBanAttributeRegistry
+
+> 大白话: 禁疗方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -176,11 +206,15 @@
 
 ## IGeneralItem
 
+> 大白话: 物品标签方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `getTabIcon()` | `Item` | - |
 
 ## ISkillItem
+
+> 大白话: 技能标签方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -188,17 +222,23 @@
 
 ## ITalentItem
 
+> 大白话: 天赋标签方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `getTabIcon()` | `Item` | - |
 
 ## IWeaponItem
 
+> 大白话: 武器标签方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `getTabIcon()` | `Item` | - |
 
 ## KnockbackImmunityRegistry
+
+> 大白话: 击退免疫方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -208,6 +248,8 @@
 
 ## NoCollisionRegistry
 
+> 大白话: 碰撞免疫方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `isImmune(LivingEntity entity)` | `boolean` | - |
@@ -215,6 +257,8 @@
 | `isImmune(LivingEntity entity)` | `boolean` | - |
 
 ## PlayerDataAPI
+
+> 大白话: 玩家数据方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -230,6 +274,8 @@
 
 ## ProjectileImmunityRegistry
 
+> 大白话: 投射免方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `hurt()` | `前置在` | - |
@@ -239,11 +285,15 @@
 
 ## ProjectileReflectionSystem
 
+> 大白话: 反弹方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |
 
 ## RealmProgressionAPI
+
+> 大白话: 境界方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -264,11 +314,15 @@
 
 ## RealmStage
 
+> 大白话: 境界等级方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |
 
 ## ShaderEnvironmentAPI
+
+> 大白话: 光影检测方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -280,6 +334,8 @@
 | `isUnknownShaderAllowed()` | `return` | - |
 
 ## ShaderManager
+
+> 大白话: 特效管理方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -324,6 +380,8 @@
 
 ## ShaderProtectionRegistry
 
+> 大白话: 着色器保护方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `registerShader(ResourceLocation id, VertexFormat vertexFormat)` | `void` | 着色器注册保护注册表 — 受 Iris 保护的着色器注册中心 <p>下游模组通过此注册表提交需要 Iris 光影兼容保护 |
@@ -345,6 +403,8 @@
 
 ## SpecialDamageAttributeRegistry
 
+> 大白话: 真伤/破甲/破无敌方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `registerTrueDamage(Holder<Attribute> holder, float scale)` | `void` | 特殊伤害属性注册表 <p> 注册的属性将自动作为真实伤害/破甲伤害/破无敌帧的数值来源。 攻击者每次近战攻击时，自动计算 |
@@ -355,6 +415,8 @@
 | `hasPierceInvulnerability(LivingEntity attacker)` | `boolean` | 检查攻击者是否拥有破无敌帧属性（总值 > 0）。 |
 
 ## StarShaderRegistry
+
+> 大白话: 星芒方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -382,11 +444,15 @@
 
 ## TargetFrameManager
 
+> 大白话: 锁定框管理方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / // 大白话: 锁定框管理方法 public fi |
 
 ## TargetFrameProvider
+
+> 大白话: 锁定框接口
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
@@ -397,12 +463,16 @@
 
 ## UndyingRegistry
 
+> 大白话: 不死方法
+
 | 方法 | 返回 | 说明 |
 |------|------|------|
 | `tryRevive(LivingEntity entity, DamageSource source)` | `float` | 复活系统注册表，挂接原版不死图腾路径 {@code checkTotemDeathProtection}。 自定义复活动 |
 | `if(!result.displayItem()` | `读取并替换` | - |
 
 ## YizModQZKAPI
+
+> 大白话: 总入口方法
 
 | 方法 | 返回 | 说明 |
 |------|------|------|

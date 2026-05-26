@@ -58,6 +58,13 @@ def extract_javadoc_and_signature(filepath):
         })
     return methods
 
+def extract_baihuahua(filepath):
+    """提取 Java 文件中的 // 大白话: 注释"""
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+    m = re.search(r'//\s*大白话:\s*(.+)', content)
+    return m.group(1).strip() if m else None
+
 def generate_yizmodqzk_api():
     src = YIZ_SRC / "net/minecraft/client/yiz/api"
     all_methods = {}
@@ -68,6 +75,14 @@ def generate_yizmodqzk_api():
         if methods:
             all_methods[classname] = methods
 
+    # 大白话译名
+    baihuahua = {}
+    for java_file in src.glob("*.java"):
+        cls = java_file.stem
+        txt = extract_baihuahua(java_file)
+        if txt:
+            baihuahua[cls] = txt
+
     # 生成 Markdown
     lines = [
         "# YizModQZKAPI 完整参考（自动生成）\n",
@@ -76,6 +91,9 @@ def generate_yizmodqzk_api():
 
     for classname, methods in sorted(all_methods.items()):
         lines.append(f"\n## {classname}\n")
+        bht = baihuahua.get(classname)
+        if bht:
+            lines.append(f"> 大白话: {bht}\n")
         lines.append("| 方法 | 返回 | 说明 |")
         lines.append("|------|------|------|")
         for m in methods:
