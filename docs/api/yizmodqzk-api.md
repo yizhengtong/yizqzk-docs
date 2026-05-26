@@ -92,7 +92,7 @@
 | `DamageResult(float applied,
     float delta,
     boolean canceled,
-    St...)` | `record` | 伤害应用结果 |
+    St...)` | `record` | - |
 | `success(float applied, float delta)` | `DamageResult` | - |
 | `DamageResult(applied, delta, false, "")` | `new` | - |
 | `canceled(String reason)` | `DamageResult` | - |
@@ -102,10 +102,7 @@
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
-| `DaoPalace(ResourceLocation anchorId,
-    BlockPos centerPos,
-    int s...)` | `record` | 道宫数据记录 [record] — 一座道宫的所有状态。 <p> 道宫是在固定坐标建造的立方体建筑。 边长 L 只增不减 |
-| `currentVolume()` | `int` | 当前正方体体积（已用/最大） |
+| `currentVolume()` | `int` | 道宫数据记录 [record] — 一座道宫的所有状态。 <p> 道宫是在固定坐标建造的立方体建筑。 边长 L 只增不减 |
 | `maxVolume()` | `int` | 当前边长对应的最大方块数 |
 | `costToExpand()` | `int` | 根据蓝图公式计算下一级需要的方块数： [(L+2)³ − L³] / (10 × 落点总数²) |
 | `influenceRange()` | `double` | 影响力范围 = L × 4^落点总数。 |
@@ -141,7 +138,7 @@
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
-| `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / pu |
+| `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / // |
 | `unlock(Player player)` | `void` | - |
 | `getLockedTargetUuid(Player player)` | `UUID` | - |
 | `hasLock(Player player)` | `boolean` | - |
@@ -269,12 +266,7 @@
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
-| `RealmStage(ResourceLocation id,
-    int order,
-    String displayName,
-...)` | `record` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |
-| `RealmStage(ResourceLocation id, int order, String displayName, Map<Stri...)` | `public` | - |
-| `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 无属性加成的境界 |
+| `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |
 
 ## ShaderEnvironmentAPI
 
@@ -392,7 +384,7 @@
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
-| `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / public final class Target |
+| `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / // 大白话: 锁定框管理方法 public fi |
 
 ## TargetFrameProvider
 
