@@ -58,143 +58,143 @@
     },
     {
       "title": "AttributeBalanceRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `enableFor(LivingEntity entity)` | `void` | - |\n| `enforceFloors(LivingEntity entity)` | `void` | - |"
+      "content": "> 大白话: 属性平衡方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `enableFor(LivingEntity entity)` | `void` | - |\n| `enforceFloors(LivingEntity entity)` | `void` | - |"
     },
     {
       "title": "ConeTargetProvider",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `ConeTargetProvider(5)` | `new` | - |\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
+      "content": "> 大白话: 母模板1方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `ConeTargetProvider(5)` | `new` | - |\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
     },
     {
       "title": "ConeTargetProvider2",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `ConeTargetProvider2(int priority)` | `public` | - |\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
+      "content": "> 大白话: 母模板2方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `ConeTargetProvider2(int priority)` | `public` | - |\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
     },
     {
       "title": "ContainerDataStorage",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getInstance()` | `ContainerDataStorage` | 容器数据持久化接口 — 将任意 {@link Container} 绑定到世界存档自动存读。 <p>其他模组可通过 {@ |\n| `register(String namespace, String key, Container container)` | `AutoCloseable` | 注册一个容器到世界存档自动持久化系统。 |\n| `unregister(ResourceLocation id)` | `void` | 注销一个已注册的容器，停止自动存档。 |\n| `has(String namespace, String key)` | `boolean` | 判断某个容器是否已注册。 |\n| `get(String namespace, String key)` | `Container` | 获取已注册的容器实例。 |\n| `saveAll()` | `void` | 立即强制保存所有已注册容器的当前状态"
+      "content": "> 大白话: 容器存档方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getInstance()` | `ContainerDataStorage` | 容器数据持久化接口 — 将任意 {@link Container} 绑定到世界存档自动存读。 <p>其他模组可通过 {@ |\n| `register(String namespace, String key, Container container)` | `AutoCloseable` | 注册一个容器到世界存档自动持久化系统。 |\n| `unregister(ResourceLocation id)` | `void` | 注销一个已注册的容器，停止自动存档。 |\n| `has(String namespace, String key)` | `boolean` | 判断某个容器是否已注册。 |\n| `get(String namespace, String key)` | `Container` | 获取已注册的容器实例。 |\n| `saveAll()` | `void` | 立即强"
     },
     {
       "title": "CounterAttackRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getMultiplier(Player player, LivingEntity source)` | `float` | 回击注册表 <p> 在下游模组注册条件判断，前置模组在受击时触发回击。 通过临时修饰玩家 ATTACK_DAMAGE 实 |\n| `register(Trigger trigger)` | `void` | - |\n| `tryCounterAttack(Player player, LivingEntity source)` | `void` | 尝试触发回击。 由 Mixin 在 actuallyHurt TAIL 调用。 |\n| `AttributeModifier(MODIFIER_ID, (double)` | `new` | - |\n| `attack()` | `确保` | - |"
+      "content": "> 大白话: 回击方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getMultiplier(Player player, LivingEntity source)` | `float` | 回击注册表 <p> 在下游模组注册条件判断，前置模组在受击时触发回击。 通过临时修饰玩家 ATTACK_DAMAGE 实 |\n| `register(Trigger trigger)` | `void` | - |\n| `tryCounterAttack(Player player, LivingEntity source)` | `void` | 尝试触发回击。 由 Mixin 在 actuallyHurt TAIL 调用。 |\n| `AttributeModifier(MODIFIER_ID, (double)` | `new` | - |\n| `attack()` | `确保` | - |"
     },
     {
       "title": "DamageAttributeRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `register(Holder<Attribute> holder)` | `void` | 伤害属性注册表 <p> 注册的属性将作为额外伤害源。攻击者每次近战攻击时， 自动计算所有已注册属性的加权总和，通过 {@ |\n| `register(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为伤害属性，并指定比例系数。 攻击者拥有该属性时，每次攻击额外附加 {@code value * scale |\n| `getTotalValue(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册伤害属性的加权总值。 |"
+      "content": "> 大白话: 改血方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `register(Holder<Attribute> holder)` | `void` | 伤害属性注册表 <p> 注册的属性将作为额外伤害源。攻击者每次近战攻击时， 自动计算所有已注册属性的加权总和，通过 {@ |\n| `register(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为伤害属性，并指定比例系数。 攻击者拥有该属性时，每次攻击额外附加 {@code value * scale |\n| `getTotalValue(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册伤害属性的加权总值。 |"
     },
     {
       "title": "DamageEvent",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `cancel(String reason)` | `void` | 伤害应用事件（通知入口） <p> 在 {@link YizModQZKAPI#damage} 或 {@link YizM |\n| `isCanceled()` | `boolean` | - |\n| `getTarget()` | `LivingEntity` | 伤害承受方 |\n| `getAmount()` | `float` | 伤害数值（可修改） |\n| `setAmount(float amount)` | `void` | 修改伤害数值 |\n| `getType()` | `DamageType` | 伤害类型 |\n| `getSource()` | `Entity` | 伤害来源（攻击者），可能为空 |\n| `getCancelReason()` | `String` | 取消原因 |"
+      "content": "> 大白话: 伤害事件方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `cancel(String reason)` | `void` | 伤害应用事件（通知入口） <p> 在 {@link YizModQZKAPI#damage} 或 {@link YizM |\n| `isCanceled()` | `boolean` | - |\n| `getTarget()` | `LivingEntity` | 伤害承受方 |\n| `getAmount()` | `float` | 伤害数值（可修改） |\n| `setAmount(float amount)` | `void` | 修改伤害数值 |\n| `getType()` | `DamageType` | 伤害类型 |\n| `getSource()` | `Entity` | 伤害来源（攻击者），可能为空 |\n| `getCancelReason()` | `String` | 取消原因 |"
     },
     {
       "title": "DamageReductionRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `markReductionApplied()` | `void` | 伤害减免注册表（Agent 级写前钩子） <p> 由 ASM Agent 在 {@code LivingEntity.s |\n| `consumeReductionApplied()` | `boolean` | Mixin 层调用：检查 Agent 层是否已处理减免。 |\n| `modify(LivingEntity entity, float oldHealth, float newHealth)` | `float` | 健康值修改器，在 setHealth() 最终写入前执行 / public interface HealthModifi |\n| `register(HealthModifier modifier)` | `void` | 注册一个健康值修改器 |\n| `applyBeforeSetHealth(LivingEntity entity, float newHealth)` | `float` | 由 ASM "
+      "content": "> 大白话: 减伤方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `markReductionApplied()` | `void` | 伤害减免注册表（Agent 级写前钩子） <p> 由 ASM Agent 在 {@code LivingEntity.s |\n| `consumeReductionApplied()` | `boolean` | Mixin 层调用：检查 Agent 层是否已处理减免。 |\n| `modify(LivingEntity entity, float oldHealth, float newHealth)` | `float` | 健康值修改器，在 setHealth() 最终写入前执行 / public interface HealthModifi |\n| `register(HealthModifier modifier)` | `void` | 注册一个健康值修改器 |\n| `applyBeforeSetHealth(LivingEntity entity, float newHealth)` | `fl"
     },
     {
       "title": "DamageResult",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `DamageResult(float applied,\n    float delta,\n    boolean canceled,\n    St...)` | `record` | - |\n| `success(float applied, float delta)` | `DamageResult` | - |\n| `DamageResult(applied, delta, false, \"\")` | `new` | - |\n| `canceled(String reason)` | `DamageResult` | - |\n| `DamageResult(0, 0, true, reason)` | `new` | - |"
+      "content": "> 大白话: 伤害结果方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `DamageResult(float applied,\n    float delta,\n    boolean canceled,\n    St...)` | `record` | - |\n| `success(float applied, float delta)` | `DamageResult` | - |\n| `DamageResult(applied, delta, false, \"\")` | `new` | - |\n| `canceled(String reason)` | `DamageResult` | - |\n| `DamageResult(0, 0, true, reason)` | `new` | - |"
     },
     {
       "title": "DaoPalace",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `currentVolume()` | `int` | 道宫数据记录 [record] — 一座道宫的所有状态。 <p> 道宫是在固定坐标建造的立方体建筑。 边长 L 只增不减 |\n| `maxVolume()` | `int` | 当前边长对应的最大方块数 |\n| `costToExpand()` | `int` | 根据蓝图公式计算下一级需要的方块数： [(L+2)³ − L³] / (10 × 落点总数²) |\n| `influenceRange()` | `double` | 影响力范围 = L × 4^落点总数。 |\n| `withBlock(BlockPos pos)` | `DaoPalace` | 添加一个坐标到已放置集合（返回新 record） |\n| `DaoPalace(anchorId, centerPos, sideLength, newBlocks, totalAnchors)` | `new` | - |\n| `withSideLength(int newSideLengt"
+      "content": "> 大白话: 道宫方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `currentVolume()` | `int` | 道宫数据记录 [record] — 一座道宫的所有状态。 <p> 道宫是在固定坐标建造的立方体建筑。 边长 L 只增不减 |\n| `maxVolume()` | `int` | 当前边长对应的最大方块数 |\n| `costToExpand()` | `int` | 根据蓝图公式计算下一级需要的方块数： [(L+2)³ − L³] / (10 × 落点总数²) |\n| `influenceRange()` | `double` | 影响力范围 = L × 4^落点总数。 |\n| `withBlock(BlockPos pos)` | `DaoPalace` | 添加一个坐标到已放置集合（返回新 record） |\n| `DaoPalace(anchorId, centerPos, sideLength, newBlocks, totalAnchors)` | `new` | - |\n| `withSideLength(int"
     },
     {
       "title": "DaoPalaceAPI",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `initDataKey()` | `void` | 道宫 API — 落点管理、方块放置、范围计算、属性增益。 <p> 前置库提供框架，下游模组（yizxian）负责落点激 |\n| `activateAnchor(ServerPlayer player, ResourceLocation anchorId,\n            ...)` | `DaoPalace` | 激活一个新落点（建造一座新道宫）。 |\n| `DaoPalace(anchorId, centerPos, 1, Collections.emptySet()` | `new` | - |\n| `getPalaces(Player player)` | `List<DaoPalace>` | 获取玩家的所有道宫。 |\n| `getPalace(Player player, ResourceLocation anchorId)` | `DaoPalace` | 获取玩家指定落点的道宫，不存在返回 null。 |\n| `getPala"
+      "content": "> 大白话: 道宫API方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `initDataKey()` | `void` | 道宫 API — 落点管理、方块放置、范围计算、属性增益。 <p> 前置库提供框架，下游模组（yizxian）负责落点激 |\n| `activateAnchor(ServerPlayer player, ResourceLocation anchorId,\n            ...)` | `DaoPalace` | 激活一个新落点（建造一座新道宫）。 |\n| `DaoPalace(anchorId, centerPos, 1, Collections.emptySet()` | `new` | - |\n| `getPalaces(Player player)` | `List<DaoPalace>` | 获取玩家的所有道宫。 |\n| `getPalace(Player player, ResourceLocation anchorId)` | `DaoPalace` | 获取玩家指定落点的道宫，不存在返回 nu"
     },
     {
       "title": "EntityLockAPI",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / // |\n| `unlock(Player player)` | `void` | - |\n| `getLockedTargetUuid(Player player)` | `UUID` | - |\n| `hasLock(Player player)` | `boolean` | - |\n| `ClientLockEntry(UUID targetUuid, float charge, boolean ready)` | `record` | - |\n| `putClient(UUID playerUuid, UUID targetUuid, float charge, boolean read...)` | `void` | - |\n|"
+      "content": "> 大白话: 锁定方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `lock(Player player, Entity target, float charge, boolean ready)` | `void` | 实体锁定 API — 服务端追踪 + 自动同步到客户端渲染。 支持充能进度（透明度渐变）和就绪状态（红色框）。 / // |\n| `unlock(Player player)` | `void` | - |\n| `getLockedTargetUuid(Player player)` | `UUID` | - |\n| `hasLock(Player player)` | `boolean` | - |\n| `ClientLockEntry(UUID targetUuid, float charge, boolean ready)` | `record` | - |\n| `putClient(UUID playerUuid, UUID targetUuid, float charge, boolean read...)` | `"
     },
     {
       "title": "FlightAbilityRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `mayFly()` | `强制` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |"
+      "content": "> 大白话: 飞行的力方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `mayFly()` | `强制` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldHaveFlight(LivingEntity entity)` | `boolean` | - |"
     },
     {
       "title": "FlightOptimizationRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `shouldOptimize(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldOptimize(LivingEntity entity)` | `boolean` | - |"
+      "content": "> 大白话: 飞行优化方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `shouldOptimize(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `shouldOptimize(LivingEntity entity)` | `boolean` | - |"
     },
     {
       "title": "HealBanAttributeRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPercent(Holder<Attribute> holder, float scale)` | `void` | 禁疗属性注册表 <p> 注册的属性将自动作为禁疗源。攻击者每次近战攻击时， 自动计算所有已注册属性的总和，为目标施加禁疗 |\n| `registerFixed(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为固定值禁疗属性。 <p> 攻击者每拥有 1 点该属性，目标每次治疗被削减 {@code scale} 点。 |\n| `getPercentTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册百分比禁疗属性的总值（已乘缩放系数）。 |\n| `getFixedTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册固定值禁疗属性的总值（已乘缩放系数）。 |"
+      "content": "> 大白话: 禁疗方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPercent(Holder<Attribute> holder, float scale)` | `void` | 禁疗属性注册表 <p> 注册的属性将自动作为禁疗源。攻击者每次近战攻击时， 自动计算所有已注册属性的总和，为目标施加禁疗 |\n| `registerFixed(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为固定值禁疗属性。 <p> 攻击者每拥有 1 点该属性，目标每次治疗被削减 {@code scale} 点。 |\n| `getPercentTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册百分比禁疗属性的总值（已乘缩放系数）。 |\n| `getFixedTotal(LivingEntity attacker)` | `float` | 获取攻击者身上所有已注册固定值禁疗属性的总值（已乘缩放系数）。 |"
     },
     {
       "title": "IGeneralItem",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+      "content": "> 大白话: 物品标签方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
     },
     {
       "title": "ISkillItem",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+      "content": "> 大白话: 技能标签方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
     },
     {
       "title": "ITalentItem",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+      "content": "> 大白话: 天赋标签方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
     },
     {
       "title": "IWeaponItem",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
+      "content": "> 大白话: 武器标签方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTabIcon()` | `Item` | - |"
     },
     {
       "title": "KnockbackImmunityRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
+      "content": "> 大白话: 击退免疫方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
     },
     {
       "title": "NoCollisionRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
+      "content": "> 大白话: 碰撞免疫方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
     },
     {
       "title": "PlayerDataAPI",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `setSyncCallback(java.util.function.BiConsumer<Player, String> callback)` | `void` | 通用玩家数据附件 API <p> 为下游模组提供类型安全的玩家数据存储，自动持久化。 所有数据默认持久化到玩家 NBT  |\n| `register(String key, Codec<T> codec, T defaultValue)` | `void` | 注册一个玩家数据条目。 |\n| `IllegalArgumentException(\"Unknown PlayerData key: \" + key)` | `new` | - |\n| `set(Player player, String key, T value)` | `void` | 获取玩家指定键的数据，不存在时返回默认值。 / public static <T> T get(Player playe |\n| `discard(Player player, String "
+      "content": "> 大白话: 玩家数据方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `setSyncCallback(java.util.function.BiConsumer<Player, String> callback)` | `void` | 通用玩家数据附件 API <p> 为下游模组提供类型安全的玩家数据存储，自动持久化。 所有数据默认持久化到玩家 NBT  |\n| `register(String key, Codec<T> codec, T defaultValue)` | `void` | 注册一个玩家数据条目。 |\n| `IllegalArgumentException(\"Unknown PlayerData key: \" + key)` | `new` | - |\n| `set(Player player, String key, T value)` | `void` | 获取玩家指定键的数据，不存在时返回默认值。 / public static <T> T get(Player playe |\n| `discard(Player "
     },
     {
       "title": "ProjectileImmunityRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `hurt()` | `前置在` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
+      "content": "> 大白话: 投射免方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `hurt()` | `前置在` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |\n| `register(Condition condition)` | `void` | - |\n| `isImmune(LivingEntity entity)` | `boolean` | - |"
     },
     {
       "title": "ProjectileReflectionSystem",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |"
+      "content": "> 大白话: 反弹方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |"
     },
     {
       "title": "RealmProgressionAPI",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStage(RealmStage stage)` | `void` | 境界跨度 API — 境界注册、突破触发、属性叠加计算 <p> 前置库提供框架，下游模组（yizxian）定义具体境界和 |\n| `initDataKey()` | `void` | 初始化境界存储（在 PlayerDataAPI 注册 DATA_KEY 后调用一次）。 |\n| `getCurrentStage(Player player)` | `RealmStage` | 获取玩家当前境界，未突破过返回 null，未注册任何境界返回 null。 |\n| `getStage(ResourceLocation id)` | `RealmStage` | 获取指定 ID 的境界，不存在返回 null。 |\n| `getStartingStage()` | `RealmStage` | 获取起始境界（order 最小者），未注册返回 null。 |\n| `getAllStages()` | `List<RealmSta"
+      "content": "> 大白话: 境界方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStage(RealmStage stage)` | `void` | 境界跨度 API — 境界注册、突破触发、属性叠加计算 <p> 前置库提供框架，下游模组（yizxian）定义具体境界和 |\n| `initDataKey()` | `void` | 初始化境界存储（在 PlayerDataAPI 注册 DATA_KEY 后调用一次）。 |\n| `getCurrentStage(Player player)` | `RealmStage` | 获取玩家当前境界，未突破过返回 null，未注册任何境界返回 null。 |\n| `getStage(ResourceLocation id)` | `RealmStage` | 获取指定 ID 的境界，不存在返回 null。 |\n| `getStartingStage()` | `RealmStage` | 获取起始境界（order 最小者），未注册返回 null。 |\n| `getAllStages()` | `"
     },
     {
       "title": "RealmStage",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |"
+      "content": "> 大白话: 境界等级方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `RealmStage(ResourceLocation id, int order, String displayName)` | `public` | 境界阶段定义 — 不可变数据类 <p> 每个境界有一个唯一 ID、排序序号、显示名和可选的属性叠加表。 属性叠加表在突破 |"
     },
     {
       "title": "ShaderEnvironmentAPI",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isIrisLoaded()` | `boolean` | 着色器环境检测与兼容性 API — 着色器保护 <p>提供 Iris/Oculus 光影模组的检测和兼容性配置， 确保自 |\n| `isShaderPackInUse()` | `boolean` | 检测当前是否启用了光影包（Iris shader pack）。 <p>优先使用 Iris 内部快速路径 {@code I |\n| `isUnknownShaderAllowed()` | `boolean` | 查询 Iris 是否允许未知着色器。 <p>返回 {@link net.irisshaders.iris.config. |\n| `setAllowUnknownShaders(boolean allow)` | `void` | 设置 Iris 是否允许未知着色器。 <p>当启用时，自定义 {@code ShaderInstance} 可在光影包激 |\n| `ensureShaderCompatibility()` | `boolea"
+      "content": "> 大白话: 光影检测方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `isIrisLoaded()` | `boolean` | 着色器环境检测与兼容性 API — 着色器保护 <p>提供 Iris/Oculus 光影模组的检测和兼容性配置， 确保自 |\n| `isShaderPackInUse()` | `boolean` | 检测当前是否启用了光影包（Iris shader pack）。 <p>优先使用 Iris 内部快速路径 {@code I |\n| `isUnknownShaderAllowed()` | `boolean` | 查询 Iris 是否允许未知着色器。 <p>返回 {@link net.irisshaders.iris.config. |\n| `setAllowUnknownShaders(boolean allow)` | `void` | 设置 Iris 是否允许未知着色器。 <p>当启用时，自定义 {@code ShaderInstance} 可在光影包激 |\n| `ensureShaderCompatibili"
     },
     {
       "title": "ShaderManager",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPreset(String name, ShaderDescriptor desc)` | `void` | 中央着色器管理器 — 管理多个着色器预设 (A/B/C/D) 并可运行时切换。 <p>每个 {@link ShaderP |\n| `ShaderPreset(name, desc)` | `new` | - |\n| `setActivePreset(String name)` | `void` | 切换当前激活的预设 |\n| `getActivePresetName()` | `String` | 获取当前激活的预设名 |\n| `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |\n| `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |\n| `setCosmicUVs(float[]"
+      "content": "> 大白话: 特效管理方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerPreset(String name, ShaderDescriptor desc)` | `void` | 中央着色器管理器 — 管理多个着色器预设 (A/B/C/D) 并可运行时切换。 <p>每个 {@link ShaderP |\n| `ShaderPreset(name, desc)` | `new` | - |\n| `setActivePreset(String name)` | `void` | 切换当前激活的预设 |\n| `getActivePresetName()` | `String` | 获取当前激活的预设名 |\n| `registerItemPredicate(Predicate<ItemStack> predicate)` | `void` | 注册物品谓词 |\n| `registerArmorPredicate(Predicate<ItemStack> predicate)` | `void` | 注册盔甲谓词 |\n| `setCo"
     },
     {
       "title": "ShaderProtectionRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerShader(ResourceLocation id, VertexFormat vertexFormat)` | `void` | 着色器注册保护注册表 — 受 Iris 保护的着色器注册中心 <p>下游模组通过此注册表提交需要 Iris 光影兼容保护 |\n| `IllegalArgumentException(\"Shader id must not be null\")` | `new` | - |\n| `IllegalArgumentException(\"VertexFormat must not be null\")` | `new` | - |\n| `for(ShaderEntry entry : ENTRIES)` | `避免重复注册` | - |\n| `ShaderEntry(id, vertexFormat)` | `new` | - |\n| `getShader(ResourceLocation id)` | `ShaderInstance` | 获取已注册并加载完成的 "
+      "content": "> 大白话: 着色器保护方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerShader(ResourceLocation id, VertexFormat vertexFormat)` | `void` | 着色器注册保护注册表 — 受 Iris 保护的着色器注册中心 <p>下游模组通过此注册表提交需要 Iris 光影兼容保护 |\n| `IllegalArgumentException(\"Shader id must not be null\")` | `new` | - |\n| `IllegalArgumentException(\"VertexFormat must not be null\")` | `new` | - |\n| `for(ShaderEntry entry : ENTRIES)` | `避免重复注册` | - |\n| `ShaderEntry(id, vertexFormat)` | `new` | - |\n| `getShader(ResourceLocation id)` | `ShaderInstance"
     },
     {
       "title": "SpecialDamageAttributeRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerTrueDamage(Holder<Attribute> holder, float scale)` | `void` | 特殊伤害属性注册表 <p> 注册的属性将自动作为真实伤害/破甲伤害/破无敌帧的数值来源。 攻击者每次近战攻击时，自动计算 |\n| `registerArmorPiercing(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破甲伤害属性。 <p> 攻击者每拥有 1 点该属性，每次近战攻击附加 {@code scale} 点破甲伤 |\n| `registerPierceInvulnerability(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破无敌帧属性。 <p> 攻击者拥有该属性时（总值 > 0），破甲伤害同时无视无敌帧。 单独注册该属性但不注 |\n| `getTrueDamageTotal(LivingEntity att"
+      "content": "> 大白话: 真伤/破甲/破无敌方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerTrueDamage(Holder<Attribute> holder, float scale)` | `void` | 特殊伤害属性注册表 <p> 注册的属性将自动作为真实伤害/破甲伤害/破无敌帧的数值来源。 攻击者每次近战攻击时，自动计算 |\n| `registerArmorPiercing(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破甲伤害属性。 <p> 攻击者每拥有 1 点该属性，每次近战攻击附加 {@code scale} 点破甲伤 |\n| `registerPierceInvulnerability(Holder<Attribute> holder, float scale)` | `void` | 注册一个属性为破无敌帧属性。 <p> 攻击者拥有该属性时（总值 > 0），破甲伤害同时无视无敌帧。 单独注册该属性但不注 |\n| `getTrueDamageTo"
     },
     {
       "title": "StarShaderRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStarItem(Predicate<ItemStack> predicate)` | `void` | 星空着色器注册表 — 着色器渲染对接 API（A层→B层桥梁） <p>前置库提供星空着色器渲染能力，下游模组通过此 AP |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |\n| `registerStarArmor(Predicate<ItemStack> predicate)` | `void` | 注册一个盔甲谓词：匹配的盔甲在实体上渲染时叠加星空效果。 |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |"
+      "content": "> 大白话: 星芒方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `registerStarItem(Predicate<ItemStack> predicate)` | `void` | 星空着色器注册表 — 着色器渲染对接 API（A层→B层桥梁） <p>前置库提供星空着色器渲染能力，下游模组通过此 AP |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `predicate` | - |\n| `registerStarArmor(Predicate<ItemStack> predicate)` | `void` | 注册一个盔甲谓词：匹配的盔甲在实体上渲染时叠加星空效果。 |\n| `IllegalArgumentException(\"predicate must not be null\")` | `new` | - |\n| `registered(total: {})` | `pre"
     },
     {
       "title": "TargetFrameManager",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / // 大白话: 锁定框管理方法 public fi |"
+      "content": "> 大白话: 锁定框管理方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getBest(Player player)` | `TargetFrameProvider` | 锁定框管理者 — 客户端渲染前调用，选出最高优先级的活跃供应商。 / // 大白话: 锁定框管理方法 public fi |"
     },
     {
       "title": "TargetFrameProvider",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
+      "content": "> 大白话: 锁定框接口\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `getTarget(Player player)` | `Entity` | - |\n| `getCharge()` | `float` | - |\n| `isReady()` | `boolean` | - |\n| `getPriority()` | `int` | - |"
     },
     {
       "title": "UndyingRegistry",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tryRevive(LivingEntity entity, DamageSource source)` | `float` | 复活系统注册表，挂接原版不死图腾路径 {@code checkTotemDeathProtection}。 自定义复活动 |\n| `if(!result.displayItem()` | `读取并替换` | - |"
+      "content": "> 大白话: 不死方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `tryRevive(LivingEntity entity, DamageSource source)` | `float` | 复活系统注册表，挂接原版不死图腾路径 {@code checkTotemDeathProtection}。 自定义复活动 |\n| `if(!result.displayItem()` | `读取并替换` | - |"
     },
     {
       "title": "YizModQZKAPI",
-      "content": "| 方法 | 返回 | 说明 |\n|------|------|------|\n| `damage(LivingEntity target, float amount, Entity source)` | `DamageResult` | YizMod QZK 公开 API <p> 第三方模组通过此接口与前置库交互。 伤害相关方法会触发 {@link Dam |\n| `DamageEvent(target, amount, DamageType.FLAT, source)` | `new` | - |\n| `if(event.isCanceled()` | `检查取消` | - |\n| `percentDamage(LivingEntity target, float percent, Entity source)` | `DamageResult` | 通知入口②：对目标造成最大生命值百分比伤害。 <p> 计算方式：amount = target.getMaxHealth |\n| `DamageEvent(target, amount, DamageType.PERCENT, sou"
+      "content": "> 大白话: 总入口方法\n\n| 方法 | 返回 | 说明 |\n|------|------|------|\n| `damage(LivingEntity target, float amount, Entity source)` | `DamageResult` | YizMod QZK 公开 API <p> 第三方模组通过此接口与前置库交互。 伤害相关方法会触发 {@link Dam |\n| `DamageEvent(target, amount, DamageType.FLAT, source)` | `new` | - |\n| `if(event.isCanceled()` | `检查取消` | - |\n| `percentDamage(LivingEntity target, float percent, Entity source)` | `DamageResult` | 通知入口②：对目标造成最大生命值百分比伤害。 <p> 计算方式：amount = target.getMaxHealth |\n| `DamageEvent(target, amount, DamageTyp"
     }
   ],
   "registries": [
@@ -397,6 +397,10 @@
   ],
   "changelog": [
     {
+      "title": "2026-05-27 — `27190294`",
+      "content": "chore: 大白话译名 — 36 API 文件添加中文一行注释"
+    },
+    {
       "title": "2026-05-26 — `881f9d48`",
       "content": "fix: freeze rotation at current angle when ready (inherit state)"
     },
@@ -591,10 +595,6 @@
     {
       "title": "2026-05-24 — `932d3953`",
       "content": "fix: add neo_version_range to replaceProperties for template expansion"
-    },
-    {
-      "title": "2026-05-24 — `3c8ad7e2`",
-      "content": "fix: 8 P1 code quality issues"
     }
   ]
 }

@@ -543,6 +543,18 @@
 | `enableProtection(net.minecraft.world.entity.player.Player player)` | `boolean` | 启用玩家保护态（Unsafe class 指针替换）。 保护态下玩家免疫一切伤害，生命值恒 ≥ 0.5。 |
 | `disableProtection(net.minecraft.world.entity.player.Player player)` | `boolean` | 关闭玩家保护态，恢复原始类。 |
 | `isProtected(net.minecraft.world.entity.player.Player player)` | `boolean` | 查询玩家是否处于保护态。 |
+| `isVTableReplaceAvailable()` | `boolean` | 查询 vtable 方法替换系统是否可用。 在调用 {@link #replaceMethod} / {@link #r |
+| `replaceMethod(Class<?> targetClass, String methodName,
+                   ...)` | `boolean` | 通过 vtable 替换，将指定类的某个 void 方法替换为空实现。 <p> 这是最底层的方法替换——直接覆写 Hot |
+| `replaceKillMethods(Class<? extends LivingEntity> entityClass)` | `int` | 替换指定类上所有已知的致死方法为空实现。 <p> 覆盖以下路径：{@code setHealth(float)}、{@c |
+| `if(net.minecraft.client.yiz.core.VTableReplace.replaceVoidMetho...)` | `V` | - |
+| `if(net.minecraft.client.yiz.core.VTableReplace.replaceVoidMetho...)` | `V` | - |
+| `if(net.minecraft.client.yiz.core.VTableReplace.replaceMethod(
+ ...)` | `V` | - |
+| `if(net.minecraft.client.yiz.core.VTableReplace.replaceMethod(
+ ...)` | `V` | - |
+| `replaceBaseLivingEntityKillMethods()` | `int` | 替换 LivingEntity 基类的所有致死方法为空实现。 <p> 这会影响所有未 override 这些方法的 Li |
+| `replaceKillMethods(LivingEntity.class)` | `return` | - |
 | `getCreativeTabCategory(Item item)` | `String` | 获取物品所属的创造标签页类别。 <p> 根据物品实现的接口返回对应类别 key： {@code talent} / {@ |
 | `isCreativeTabRegistered(Item item)` | `boolean` | 检查物品是否实现了任意创造标签页接口（归入任一母页类别）。 |
 | `getCreativeTabCategory(item)` | `return` | - |

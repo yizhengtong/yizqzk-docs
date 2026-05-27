@@ -1,10 +1,14 @@
 # 变更日志
 
-最后更新: 2026-05-26 23:41
+最后更新: 2026-05-27 11:15
 
 来源仓库: `D:/ZM/yizgzq/yiz1.21.1`
 
 ---
+
+### 2026-05-27 — `27190294`
+
+chore: 大白话译名 — 36 API 文件添加中文一行注释
 
 ### 2026-05-26 — `881f9d48`
 
@@ -201,7 +205,3 @@ fix: HumanoidArmorLayerStarMixin now catches unregistered PlayerData key instead
 ### 2026-05-24 — `932d3953`
 
 fix: add neo_version_range to replaceProperties for template expansion
-
-### 2026-05-24 — `3c8ad7e2`
-
-fix: 8 P1 code quality issues
