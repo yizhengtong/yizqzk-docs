@@ -7,7 +7,6 @@
 """
 
 import subprocess
-import os
 from pathlib import Path
 from datetime import datetime
 
@@ -15,19 +14,19 @@ DOCS_CHANGELOG = Path("D:/ZM/yizgzq/yizqzk-docs/docs/changelog/index.md")
 REPO_PATH = "D:/ZM/yizgzq/yiz1.21.1"
 
 def run_git_log():
-    os.chdir(REPO_PATH)
     result = subprocess.run(
         ["git", "log", "--oneline", "--no-decorate", "-50"],
-        capture_output=True, text=True, encoding="utf-8"
+        capture_output=True, text=True, encoding="utf-8",
+        cwd=REPO_PATH
     )
-    return result.stdout.strip().split("\n")
+    return result.stdout.strip().split("\n") if result.stdout.strip() else []
 
 def run_git_show(hash):
     """获取某个 commit 的详细信息"""
-    os.chdir(REPO_PATH)
     result = subprocess.run(
         ["git", "log", "-1", "--format=%H|%ai|%s", hash],
-        capture_output=True, text=True, encoding="utf-8"
+        capture_output=True, text=True, encoding="utf-8",
+        cwd=REPO_PATH
     )
     parts = result.stdout.strip().split("|", 2)
     return {

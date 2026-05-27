@@ -27,7 +27,11 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             return
 
-        length = int(self.headers.get("Content-Length", 0))
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+        except (ValueError, TypeError):
+            self._reply(400, {"error": "invalid Content-Length"})
+            return
         body = self.rfile.read(length).decode("utf-8")
         try:
             data = json.loads(body)
@@ -35,7 +39,7 @@ class Handler(BaseHTTPRequestHandler):
             self._reply(400, {"error": "invalid json"})
             return
 
-        name = data.get("name", "untitled").strip()
+        name = (data.get("name") or "untitled").strip()
         if not name:
             self._reply(400, {"error": "name required"})
             return
