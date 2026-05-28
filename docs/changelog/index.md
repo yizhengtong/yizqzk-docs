@@ -1,10 +1,22 @@
 # 变更日志
 
-最后更新: 2026-05-27 11:15
+最后更新: 2026-05-29 01:03
 
 来源仓库: `D:/ZM/yizgzq/yiz1.21.1`
 
 ---
+
+### 2026-05-28 — `beacbaf0`
+
+fix: 修复 6 个确定性 Bug
+
+### 2026-05-28 — `7984a756`
+
+feat(gui): window capture panel system, Vulkan interop, keyboard mixin
+
+### 2026-05-27 — `30100ceb`
+
+Phase 2: Window capture panel system + DLL bridge
 
 ### 2026-05-27 — `27190294`
 
@@ -193,15 +205,3 @@ feat: creative tab auto-registry — 4母页系统 + 4接口API
 ### 2026-05-25 — `e7276a4e`
 
 feat: DaoPalace & RealmProgression API — 道宫建筑系统 + 境界跨度框架
-
-### 2026-05-24 — `41b02dbe`
-
-chore: add build_dead/ to .gitignore; remove build_dead from tracking
-
-### 2026-05-24 — `ff83aa53`
-
-fix: HumanoidArmorLayerStarMixin now catches unregistered PlayerData key instead of crashing
-
-### 2026-05-24 — `932d3953`
-
-fix: add neo_version_range to replaceProperties for template expansion

@@ -116,6 +116,27 @@
 | `canceled(String reason)` | `DamageResult` | - |
 | `DamageResult(0, 0, true, reason)` | `new` | - |
 
+## DamageSourceAPI
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `isPlayerAttacker(DamageSource source)` | `boolean` | 伤害来源判断 API <p> 提供便捷方法用于判断伤害来源的类型和归属。 下游模组可通过此 API 区分近战/远程攻击、 |
+| `isMeleeAttack(DamageSource source)` | `boolean` | 获取造成伤害的实体（攻击者）。 对于间接伤害（如弓箭），这是射出箭的实体而非箭本身。 / public static E |
+| `isIndirectAttack(DamageSource source)` | `boolean` | 判断是否为间接攻击（远程/投射物/魔法等）。 <p>间接攻击：直接实体与攻击者不是同一实体（如箭由弓射出、火球由发射器发 |
+
+## DamageValueModifier
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `modify(LivingEntity target, DamageSource source, float amount)` | `float` | 伤害数值修改器接口 <p> 用于在 {@code LivingEntity.hurt()} 入口处修改伤害数值， 由 { |
+
+## DamageValueModifierRegistry
+
+| 方法 | 返回 | 说明 |
+|------|------|------|
+| `register(DamageValueModifier modifier)` | `void` | 伤害数值修改注册表 <p> 在 {@code LivingEntity.hurt()} 入口处（护甲/附魔计算之前）拦截 |
+| `apply(LivingEntity target, DamageSource source, float amount)` | `float` | 在 hurt() 入口处调用，依次应用所有已注册的修改器。 由 {@code LivingEntityMixin.yiz |
+
 ## DaoPalace
 
 > 大白话: 道宫方法
@@ -289,7 +310,9 @@
 
 | 方法 | 返回 | 说明 |
 |------|------|------|
-| `tick(Player player)` | `void` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |
+| `onProjectileHitEntity(Projectile projectile, Entity hitEntity)` | `boolean` | 投射物返还系统 <p> 下游注册反射条件，前置自动检测范围内的投射物并处理： 无主人 → 移除，有主人 → 转移所有权并 |
+| `for(ConfigEntry entry : CONFIGS)` | `自己的投射物不反弹` | - |
+| `tick(Player player)` | `void` | 每 tick 调用（由 PlayerTickEvent.Post 或 Mixin 触发）。 1. 扫描玩家范围内投射物  |
 
 ## RealmProgressionAPI
 
